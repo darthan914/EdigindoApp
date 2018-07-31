@@ -1,0 +1,40 @@
+sidemenu {
+	ion-icon {
+        font-size: 6em; //Preferred size here
+    }
+
+	.profile
+	{
+		width: 100%;
+		text-align: center;
+
+		.img-profile
+		{
+		    background: #fff;
+		    z-index: 1000;
+		    border: 1px solid rgba(52, 73, 94, 0.44);
+		    padding: 4px;
+		    border-radius: 50%;
+		    background-size: cover;
+		    margin: auto;
+		    margin-top: 20px;
+		}
+
+		.name-profile
+		{
+		    font-size: 18px;
+		    font-weight: bold;
+		    margin: 0.7em 0em;
+		}
+
+		.position-profile
+		{
+		    font-size: 14px;
+		    margin: 0;
+		    font-weight: 300;
+		}
+	}
+
+}
+
+

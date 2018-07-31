@@ -1,0 +1,71 @@
+<!--
+	Generated template for the DeliveryViewPage page.
+
+	See http://ionicframework.com/docs/components/#navigation for more info on
+	Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+
+		<ion-title>View Delivery</ion-title>
+
+		<ion-buttons end>
+			<button ion-button icon-only color="danger" (click)="this.close()">
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+		
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row>
+			<ion-col col-12><img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+index.latitude+','+index.longitude+'&zoom=15&size=600x300&maptype=roadmap&key='+this.env.gmap_api+'&markers=color:red%7Clabel:Location%7C'+index.latitude+','+index.longitude" style="width: 100%" /></ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Address</h3></ion-col>
+			<ion-col col-8>{{ index.address }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Send Date</h3></ion-col>
+			<ion-col col-8>{{this.util.datetimeFormat(index.datetime_send)}}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>From</h3></ion-col>
+			<ion-col col-8>{{ index.name }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>SPK</h3></ion-col>
+			<ion-col col-8>{{ index.spk }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Project</h3></ion-col>
+			<ion-col col-8>{{ index.project }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Company</h3></ion-col>
+			<ion-col col-8>{{ index.company }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>PIC</h3></ion-col>
+			<ion-col col-8>{{ index.pic_name }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>PIC Phone</h3></ion-col>
+			<ion-col col-8>{{ index.pic_phone }}</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-12><h3>Detail</h3></ion-col>
+			<ion-col col-12 [innerHtml]="index.detail"></ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Note</h3></ion-col>
+			<ion-col col-8>{{ index.note }}</ion-col>
+		</ion-row>
+		
+	</ion-grid>
+</ion-content>

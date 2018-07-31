@@ -1,0 +1,7 @@
+{
+  "name": "EdigindoApp",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

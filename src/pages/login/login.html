@@ -1,0 +1,23 @@
+
+<ion-content padding center text-center>
+	<ion-title>Edigindo</ion-title>
+	<ion-list>
+
+		<ion-item>
+			<ion-label floating>Username</ion-label>
+			<ion-input type="text" [(ngModel)]="loginData.username"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label floating>Password</ion-label>
+			<ion-input type="password"	[(ngModel)]="loginData.password"></ion-input>
+		</ion-item>
+
+	</ion-list>
+
+	<div padding>
+		<button ion-button block (click)="this.login()">Login</button>
+	</div>
+</ion-content>
+
+

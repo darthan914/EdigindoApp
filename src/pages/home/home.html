@@ -1,0 +1,56 @@
+<!--
+	Generated template for the HomePage page.
+
+	See http://ionicframework.com/docs/components/#navigation for more info on
+	Ionic pages and navigation.
+-->
+
+<ion-header>
+	<ion-navbar>
+		<ion-title>Main Menu</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<sidemenu></sidemenu>
+
+
+<ion-content padding>
+	<ion-grid>
+		<ion-row *ngFor="let list of index;">
+
+			<ion-col>
+				<ion-card>
+					<img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+list.latitude+','+list.longitude+'&zoom=15&size=600x300&maptype=roadmap&key='+this.env.gmap_api" style="width: 100%" />
+					<ion-card-content>
+						<ion-card-title>
+							
+							{{ list.project }}
+							
+						</ion-card-title>
+						<p>
+							From : {{ list.fullname }}
+						</p>
+						<p>
+							SPK : {{ list.spk }}
+						</p>
+						<p>
+							Note : {{ list.note }}
+						</p>
+						<ion-grid>
+							<ion-row>
+								<ion-col col-6>
+									<button ion-button clear color="secondary">Take</button>
+								</ion-col>
+								<ion-col col-6>
+									<button ion-button clear>View</button>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+
+		</ion-row>
+	</ion-grid>
+</ion-content>
+

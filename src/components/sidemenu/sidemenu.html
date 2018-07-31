@@ -1,0 +1,20 @@
+<!-- Generated template for the SidemenuComponent component -->
+<ion-menu [content]="sidemenu" type="overlay">
+	<ion-content>
+		<ion-list>
+			<div class="profile">
+				<div style="width: 12em; height: 12em;" [style.background-image]="this.util.getLocalURLImage(user.photo)" class="img-profile"></div>
+				<div class="name-profile">{{ user.fullname }}</div>
+				<div class="position-profile">{{ position.name }}</div>
+			</div>
+		</ion-list>
+		<!-- <div class="ln_solid"></div> -->
+		<ion-list>
+			<ion-item *ngIf="this.auth.hasAccess('list-designRequest')">My Request Design</ion-item>
+			<ion-item *ngIf="this.auth.hasAccess('list-delivery')">My List Deliver</ion-item>
+			<ion-item (click)="logout()">Logout</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-menu>
+
+<ion-nav [root]="rootPage" #sidemenu></ion-nav>
