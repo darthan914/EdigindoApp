@@ -8,6 +8,9 @@ import { HomePage } from '../pages/home/home';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
 
+import { UtilityProvider } from '../providers/utility/utility';
+import { AuthenticationProvider } from '../providers/authentication/authentication';
+
 @Component({
 	templateUrl: 'app.html',
 	// template: `
@@ -39,6 +42,8 @@ export class MyApp {
 		statusBar: StatusBar,
 		splashScreen: SplashScreen,
 		public http: Http,
+		public util      : UtilityProvider,
+		public auth      : AuthenticationProvider,
 
 	)
 	{

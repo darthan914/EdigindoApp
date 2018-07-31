@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { DeliveryTakenPage } from './taken';
+import { DeliveryTakenPage } from './delivery-taken';
 
 @NgModule({
   declarations: [

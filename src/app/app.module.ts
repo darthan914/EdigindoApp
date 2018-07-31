@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
+import { Geolocation } from '@ionic-native/geolocation';
 
 import { HttpClientModule/*, HttpClient*/ } from '@angular/common/http';
 
@@ -13,10 +14,11 @@ import { LoginPage } from '../pages/login/login';
 import { HomePage } from '../pages/home/home';
 import { GotoPage } from '../pages/goto/goto';
 import { DeliveryPage } from '../pages/delivery/delivery';
-import { DeliveryWaitingPage } from '../pages/delivery/waiting/waiting';
-import { DeliveryWaitingFilterPage } from '../pages/delivery/waiting/filter/filter';
-import { DeliveryTakenPage } from '../pages/delivery/taken/taken';
-import { DeliveryViewPage } from '../pages/delivery/view/view';
+import { DeliveryWaitingPage } from '../pages/delivery/delivery-waiting/delivery-waiting';
+import { DeliveryWaitingFilterPage } from '../pages/delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
+import { DeliveryTakenPage } from '../pages/delivery/delivery-taken/delivery-taken';
+import { DeliveryTakenFilterPage } from '../pages/delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
+import { DeliveryViewPage } from '../pages/delivery/delivery-view/delivery-view';
 
 import { EnviromentProvider } from '../providers/enviroment/enviroment';
 import { UtilityProvider } from '../providers/utility/utility';
@@ -43,6 +45,7 @@ import { SidemenuComponent } from '../components/sidemenu/sidemenu';
     DeliveryWaitingPage,
     DeliveryWaitingFilterPage,
     DeliveryTakenPage,
+    DeliveryTakenFilterPage,
     DeliveryViewPage,
   ],
   imports: [
@@ -51,6 +54,7 @@ import { SidemenuComponent } from '../components/sidemenu/sidemenu';
     IonicModule.forRoot(MyApp),
     HttpModule,
     HttpClientModule,
+
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -62,6 +66,7 @@ import { SidemenuComponent } from '../components/sidemenu/sidemenu';
     DeliveryWaitingPage,
     DeliveryWaitingFilterPage,
     DeliveryTakenPage,
+    DeliveryTakenFilterPage,
     DeliveryViewPage,
   ],
   providers: [
@@ -71,6 +76,7 @@ import { SidemenuComponent } from '../components/sidemenu/sidemenu';
     EnviromentProvider,
     UtilityProvider,
     AuthenticationProvider,
+    Geolocation,
   ]
 })
 export class AppModule {}

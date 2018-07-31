@@ -7,6 +7,9 @@
 
 <ion-header>
 	<ion-navbar>
+		<button ion-button [menuToggle]="activeMenu">
+	      <ion-icon name="menu"></ion-icon>
+	    </button>
 		<ion-title>Main Menu</ion-title>
 	</ion-navbar>
 </ion-header>
@@ -16,38 +19,10 @@
 
 <ion-content padding>
 	<ion-grid>
-		<ion-row *ngFor="let list of index;">
+		<ion-row *ngFor="let list of menu.data;">
 
 			<ion-col>
-				<ion-card>
-					<img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+list.latitude+','+list.longitude+'&zoom=15&size=600x300&maptype=roadmap&key='+this.env.gmap_api" style="width: 100%" />
-					<ion-card-content>
-						<ion-card-title>
-							
-							{{ list.project }}
-							
-						</ion-card-title>
-						<p>
-							From : {{ list.fullname }}
-						</p>
-						<p>
-							SPK : {{ list.spk }}
-						</p>
-						<p>
-							Note : {{ list.note }}
-						</p>
-						<ion-grid>
-							<ion-row>
-								<ion-col col-6>
-									<button ion-button clear color="secondary">Take</button>
-								</ion-col>
-								<ion-col col-6>
-									<button ion-button clear>View</button>
-								</ion-col>
-							</ion-row>
-						</ion-grid>
-					</ion-card-content>
-				</ion-card>
+				<button ion-button color="light" full *ngIf="this.auth.hasAccess(list.access)" (click)="this.open(list.page)">{{ list.name }}</button>
 			</ion-col>
 
 		</ion-row>

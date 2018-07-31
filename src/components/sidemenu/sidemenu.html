@@ -1,4 +1,5 @@
 <!-- Generated template for the SidemenuComponent component -->
+
 <ion-menu [content]="sidemenu" type="overlay">
 	<ion-content>
 		<ion-list>
@@ -10,8 +11,6 @@
 		</ion-list>
 		<!-- <div class="ln_solid"></div> -->
 		<ion-list>
-			<ion-item *ngIf="this.auth.hasAccess('list-designRequest')">My Request Design</ion-item>
-			<ion-item *ngIf="this.auth.hasAccess('list-delivery')">My List Deliver</ion-item>
 			<ion-item (click)="logout()">Logout</ion-item>
 		</ion-list>
 	</ion-content>

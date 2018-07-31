@@ -7,6 +7,9 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { UtilityProvider } from '../../providers/utility/utility';
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 import { LoginPage } from '../login/login';
+import { DeliveryPage } from '../delivery/delivery';
+import { DeliveryWaitingPage } from '../delivery/delivery-waiting/delivery-waiting';
+import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 
 /**
  * Generated class for the HomePage page.
@@ -38,12 +41,21 @@ import { LoginPage } from '../login/login';
 
 	}
 
+	menu = {
+		'data' : [
+			{'page' : DeliveryWaitingPage, 'name' : 'Delivery', 'access' : 'list-delivery'},
+			{'page' : DeliveryTakenPage, 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
+		]
+	};
+
 
 	user:any     = JSON.parse(localStorage.getItem('user'));
 	position:any = JSON.parse(localStorage.getItem('position'));
 
 	index:any  = [];
 	result:any = [];
+
+
 
 	ionViewDidLoad()
 	{
@@ -88,30 +100,15 @@ import { LoginPage } from '../login/login';
 		});
 	}
 
+	open(page)
+	{
+		this.navCtrl.push(page);
+		// this.navCtrl.setRoot(DeliveryPage);
+	}
+
 	load()
 	{
 		
-
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
-
-		let data = {};
-
-		this.http.post(this.env.base_url+"api/delivery?token="+encodeURI(localStorage.getItem('token')), data, options)
-			.subscribe(
-				data => { 
-					this.index = data.json().data;
-				},
-				error => { 
-					
-				}
-			);
 	}
 
 }

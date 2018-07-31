@@ -15,7 +15,7 @@ import { UtilityProvider } from '../../../providers/utility/utility';
 @IonicPage()
 @Component({
 	selector: 'page-delivery-view',
-	templateUrl: 'view.html',
+	templateUrl: 'delivery-view.html',
 })
 export class DeliveryViewPage {
 

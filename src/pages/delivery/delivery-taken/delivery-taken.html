@@ -1,17 +1,18 @@
 <!--
-	Generated template for the DeliveryWaitingPage page.
+  Generated template for the DeliveryTakenPage page.
 
-	See http://ionicframework.com/docs/components/#navigation for more info on
-	Ionic pages and navigation.
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
 -->
 
-<sidemenu></sidemenu>
+
 
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Delivery</ion-title>
-		<ion-buttons end>
+
+	    <ion-title>My List Job Delivery</ion-title>
+	    <ion-buttons end>
 			<button ion-button icon-only color="dark" (click)="this.filter()">
 				<ion-icon name="search"></ion-icon>
 			</button>
@@ -19,7 +20,7 @@
 	</ion-navbar>
 
 </ion-header>
-
+<sidemenu></sidemenu>
 
 <ion-content padding>
 	<ion-refresher (ionRefresh)="refresh($event)">
@@ -42,6 +43,7 @@
 				<button ion-button full icon-only color="light" [disabled]="!this.enabledNextBtn" (click)="nextPage()"><ion-icon name="skip-forward"></ion-icon></button>
 			</ion-col>
 		</ion-row>
+
 		<ion-row>
 			<ion-col col-sm-6 col-12 *ngFor="let list of index;">
 				<ion-card>
@@ -64,21 +66,85 @@
 						<p>
 							Note : {{ list.note }}
 						</p>
-						<ion-grid>
-							<ion-row>
+						<ion-chip>
+							<ion-label>{{ list.status }}</ion-label>
+						</ion-chip>
+						<ion-grid *ngIf="list.status == 'TAKEN'">
+							<ion-row *ngIf="this.auth.hasAccess('undoTake-delivery')">
+								<ion-col col-6>
+									<button ion-button full (click)="view(list.id)">View</button>
+								</ion-col>
+								<ion-col col-4>
+									<button ion-button full color="success" (click)="startSend(list.id)">Start</button>
+								</ion-col>
+								<ion-col col-2>
+									<button ion-button full color="warning" icon-only (click)="undoTake(list.id)">
+										<ion-icon name="undo"></ion-icon>
+									</button>
+								</ion-col>
+							</ion-row>
+
+							<ion-row *ngIf="!this.auth.hasAccess('undoTake-delivery')">
 								<ion-col col-6>
 									<button ion-button full (click)="view(list.id)">View</button>
 								</ion-col>
 								<ion-col col-6>
-									<button ion-button full color="secondary" (click)="take(list.id)">Take</button>
+									<button ion-button full color="success" (click)="startSend(list.id)">Start</button>
 								</ion-col>
 							</ion-row>
+						</ion-grid>
+
+						<ion-grid *ngIf="list.status == 'SENDING'">
+							<ion-row>
+								<ion-col col-6>
+									<button ion-button full (click)="view(list.id)">View</button>
+								</ion-col>
+								<ion-col col-4>
+									<button ion-button full color="success" (click)="finish(list.id)">Finish</button>
+								</ion-col>
+								<ion-col col-2>
+									<button ion-button full color="warning" icon-only (click)="undoStartSend(list.id)">
+										<ion-icon name="undo"></ion-icon>
+									</button>
+								</ion-col>
+							</ion-row>
+
+						</ion-grid>
+
+						<ion-grid *ngIf="list.status == 'FINISH'">
+							<ion-row>
+								<ion-col col-6>
+									<button ion-button full (click)="view(list.id)">View</button>
+								</ion-col>
+
+								<ion-col col-6>
+									<button ion-button full color="warning" icon-end (click)="undoFinish(list.id)">
+										Undo Finish <ion-icon name="undo"></ion-icon>
+									</button>
+								</ion-col>
+							</ion-row>
+
+						</ion-grid>
+
+						<ion-grid *ngIf="list.status == 'SUCCESS' || list.status == 'FAILED'">
+							<ion-row>
+								<ion-col col-6>
+									<button ion-button full (click)="view(list.id)">View</button>
+								</ion-col>
+
+								<ion-col col-6>
+
+
+								</ion-col>
+							</ion-row>
+
 						</ion-grid>
 					</ion-card-content>
 				</ion-card>
 			</ion-col>
 
 		</ion-row>
+
 		<ion-row>
 			<ion-col col-sm-4 col-3>
 				<button ion-button full icon-only color="light" [disabled]="!this.enabledPrevBtn" (click)="prevPage()"><ion-icon name="skip-backward"></ion-icon></button>

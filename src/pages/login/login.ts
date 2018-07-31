@@ -37,7 +37,7 @@ export class LoginPage {
 				{
 					localStorage.setItem('user', JSON.stringify(this.result.data.user));
 					localStorage.setItem('position', JSON.stringify(this.result.data.position));
-					this.navCtrl.setRoot(DeliveryPage);
+					this.navCtrl.setRoot(HomePage);
 				}
 				
 			}, (err) => {

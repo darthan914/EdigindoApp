@@ -6,12 +6,15 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
-import { DeliveryViewPage } from '../../delivery/view/view';
+import { DeliveryViewPage } from '../../delivery/delivery-view/delivery-view';
+import { DeliveryWaitingFilterPage } from '../../delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
 import { GotoPage } from '../../goto/goto';
 import { LoginPage } from '../../login/login';
+import { HomePage } from '../../home/home';
+
 
 /**
- * Generated class for the DeliveryTakenPage page.
+ * Generated class for the DeliveryWaitingPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -19,10 +22,10 @@ import { LoginPage } from '../../login/login';
 
 @IonicPage()
 @Component({
-  selector: 'page-delivery-taken',
-  templateUrl: 'taken.html',
+	selector: 'page-delivery-waiting',
+	templateUrl: 'delivery-waiting.html',
 })
-export class DeliveryTakenPage {
+export class DeliveryWaitingPage {
 	authData: any;
 
 	index:any     = [];
@@ -40,8 +43,8 @@ export class DeliveryTakenPage {
 
 	f_via    = '';
     f_range  = '';
-    f_when   = 'all';
-    f_status = '';
+    f_when   = 'today';
+    f_status = 'WAITING';
     f_user   = '';
     f_id     = '';
 
@@ -51,7 +54,8 @@ export class DeliveryTakenPage {
 	enabledNextBtn:boolean = false;
 	enabledPrevBtn:boolean = false;
 
-    constructor(public navCtrl   : NavController,
+	constructor(
+		public navCtrl   : NavController,
 		public navParams : NavParams,
 		public modalCtrl : ModalController,
 		public http      : Http, 
@@ -59,30 +63,16 @@ export class DeliveryTakenPage {
 		public util      : UtilityProvider,
 		public auth      : AuthenticationProvider,
 	)
-    {
-    	this.auth.checkAuth(localStorage.getItem('token')).then((data) => {
-			this.authData = data;
-
-			console.log(this.authData.data.token);
-			if(this.authData.status == "OK")
-			{
-				localStorage.setItem('user', JSON.stringify(this.authData.data.user));
-				localStorage.setItem('position', JSON.stringify(this.authData.data.position));
-			}
-			
-		}, (err) => {
-			localStorage.clear();
-			this.navCtrl.setRoot(LoginPage);
-			this.util.presentToast('Session is Time Out!');
-		});
-    }
-
-	ionViewWillLoad() {
-	    // console.log('ionViewDidLoad DeliveryTakenPage');
-	    this.load();
+	{
+		
 	}
 
-    refresh(refresher)
+	ionViewDidLoad() {
+		// console.log('ionViewDidLoad DeliveryWaitingPage');
+		this.load();
+	}
+
+	refresh(refresher)
 	{
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -109,7 +99,7 @@ export class DeliveryTakenPage {
 			order : this.order
 		}
 			
-		this.http.post(this.env.base_url+"api/delivery/courier?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery?token="+encodeURI(localStorage.getItem('token')), data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
@@ -183,11 +173,9 @@ export class DeliveryTakenPage {
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/courier?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery?token="+encodeURI(localStorage.getItem('token')), data, options)
 			.subscribe(
 				data => {
-					console.log(data.json());
-
 					if(data.json().status == "OK")
 					{
 						this.util.loading.dismiss();
@@ -250,45 +238,45 @@ export class DeliveryTakenPage {
 
 	filter()
 	{
-		// const passingData = {
-		// 	f_via     : this.f_via,
-		// 	f_range   : this.f_range,
-		// 	f_when    : this.f_when,
-		// 	f_status  : this.f_status,
-		// 	f_user    : this.f_user,
-		// 	f_id      : this.f_id,
-		// 	s_spk     : this.s_spk,
-		// 	s_project : this.s_project,
+		const passingData = {
+			f_via     : this.f_via,
+			f_range   : this.f_range,
+			f_when    : this.f_when,
+			f_status  : this.f_status,
+			f_user    : this.f_user,
+			f_id      : this.f_id,
+			s_spk     : this.s_spk,
+			s_project : this.s_project,
 
-		// 	limit : this.limit,
-		// 	sort  : this.sort,
-		// 	order : this.order
-		// }
+			limit : this.limit,
+			sort  : this.sort,
+			order : this.order
+		}
 
-		// const modal = this.modalCtrl.create(DeliveryWaitingFilterPage, passingData);
+		const modal = this.modalCtrl.create(DeliveryWaitingFilterPage, passingData);
 
-		// modal.present();
+		modal.present();
 
-		// modal.onWillDismiss((data) => {
-		// 	if(data.status == 'APPLY')
-		// 	{
-		// 		this.f_via     = data.data.f_via;
-		// 	    this.f_range   = data.data.f_range;
-		// 	    this.f_when    = data.data.f_when;
-		// 	    this.f_status  = data.data.f_status;
-		// 	    this.f_user    = data.data.f_user;
-		// 	    this.f_id      = data.data.f_id;
+		modal.onWillDismiss((data) => {
+			if(data.status == 'APPLY')
+			{
+				this.f_via     = data.data.f_via;
+			    this.f_range   = data.data.f_range;
+			    this.f_when    = data.data.f_when;
+			    this.f_status  = data.data.f_status;
+			    this.f_user    = data.data.f_user;
+			    this.f_id      = data.data.f_id;
 
-		// 	    this.s_spk     = data.data.s_spk;
-		// 	    this.s_project = data.data.s_project;
+			    this.s_spk     = data.data.s_spk;
+			    this.s_project = data.data.s_project;
 
-		// 	    this.limit = data.data.limit;
-		// 	    this.sort  = data.data.sort;
-		// 	    this.order = data.data.order;
+			    this.limit = data.data.limit;
+			    this.sort  = data.data.sort;
+			    this.order = data.data.order;
 
-		// 	    this.load();
-		// 	}
-		// })
+			    this.load();
+			}
+		})
 	}
 
 	nextPage()
@@ -324,7 +312,7 @@ export class DeliveryTakenPage {
 		})
 	}
 
-	undoTake(id)
+	take(id)
 	{
 		var headers = new Headers();
 		headers.append('Content-Type', 'application/json');
@@ -340,7 +328,7 @@ export class DeliveryTakenPage {
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoTake?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/take?token="+encodeURI(localStorage.getItem('token')), data, options)
 			.subscribe(
 				data => {
 					this.util.loading.dismiss();
@@ -358,147 +346,4 @@ export class DeliveryTakenPage {
 				}
 			);
 	}
-
-
-	startSend(id)
-	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
-
-		let data = {
-			id : id
-		}
-
-		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/startSend?token="+encodeURI(localStorage.getItem('token')), data, options)
-			.subscribe(
-				data => {
-					this.util.loading.dismiss();
-					this.util.presentToast(data.json().message);
-
-					if(data.json().status == "OK")
-					{
-						this.load();
-					}
-
-				},
-				error => { 
-					this.util.loading.dismiss();
-					this.util.presentToast('Server Error!');
-				}
-			);
-	}
-
-	undoStartSend(id)
-	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
-
-		let data = {
-			id : id
-		}
-
-		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoStartSend?token="+encodeURI(localStorage.getItem('token')), data, options)
-			.subscribe(
-				data => {
-					this.util.loading.dismiss();
-					this.util.presentToast(data.json().message);
-
-					if(data.json().status == "OK")
-					{
-						this.load();
-					}
-
-				},
-				error => { 
-					this.util.loading.dismiss();
-					this.util.presentToast('Server Error!');
-				}
-			);
-	}
-
-
-	finish(id)
-	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
-
-		let data = {
-			id : id
-		}
-
-		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/finish?token="+encodeURI(localStorage.getItem('token')), data, options)
-			.subscribe(
-				data => {
-					this.util.loading.dismiss();
-					this.util.presentToast(data.json().message);
-
-					if(data.json().status == "OK")
-					{
-						this.load();
-					}
-
-				},
-				error => { 
-					this.util.loading.dismiss();
-					this.util.presentToast('Server Error!');
-				}
-			);
-	}
-
-	undoFinish(id)
-	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
-
-		let data = {
-			id : id
-		}
-
-		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoFinish?token="+encodeURI(localStorage.getItem('token')), data, options)
-			.subscribe(
-				data => {
-					this.util.loading.dismiss();
-					this.util.presentToast(data.json().message);
-
-					if(data.json().status == "OK")
-					{
-						this.load();
-					}
-
-				},
-				error => { 
-					this.util.loading.dismiss();
-					this.util.presentToast('Server Error!');
-				}
-			);
-	}
-
 }
