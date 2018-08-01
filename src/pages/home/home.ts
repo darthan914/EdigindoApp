@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
 
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 import { LoginPage } from '../login/login';
-import { DeliveryPage } from '../delivery/delivery';
 import { DeliveryWaitingPage } from '../delivery/delivery-waiting/delivery-waiting';
 import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 
@@ -43,8 +42,15 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 
 	menu = {
 		'data' : [
-			{'page' : DeliveryWaitingPage, 'name' : 'Delivery', 'access' : 'list-delivery'},
-			{'page' : DeliveryTakenPage, 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
+			{
+				'group_name' : 'Delivery',
+				'access'     : 'list-delivery',
+				'content'    : [
+					{'page' : DeliveryWaitingPage, 'name' : 'Delivery', 'access' : 'list-delivery'},
+					{'page' : DeliveryTakenPage, 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
+				]
+			}
+			
 		]
 	};
 
@@ -86,7 +92,34 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 			this.navCtrl.setRoot(LoginPage);
 		}
 
-		this.load();
+	}
+
+	refresh(refresher)
+	{
+		if(localStorage.getItem("token")) {
+			this.auth.checkAuth(localStorage.getItem("token")).then((result) => {
+				this.result = result;
+				if(this.result.status == "ERROR")
+				{
+					refresher.complete();
+					this.util.presentToast(this.result.message);
+				}
+				else
+				{
+					refresher.complete();
+					localStorage.setItem('user', JSON.stringify(this.result.data.user));
+					localStorage.setItem('position', JSON.stringify(this.result.data.position));
+
+					this.user     = JSON.parse(localStorage.getItem('user'));
+					this.position = JSON.parse(localStorage.getItem('position'));
+				}
+				
+			}, (err) => {
+				localStorage.clear();
+				this.navCtrl.setRoot(LoginPage);
+				this.util.presentToast('Session Login time out!');
+			});
+		}
 	}
 
 	logout() {
@@ -96,7 +129,7 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 			this.navCtrl.setRoot(LoginPage);
 		}, (err) => {
 			this.util.loading.dismiss();
-			this.util.presentToast('Failed to logout!');
+			this.navCtrl.setRoot(LoginPage);
 		});
 	}
 

@@ -25,7 +25,7 @@ import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 
 // import { ComponentsModule } from '../components/components.module';
-import { SidemenuComponent } from '../components/sidemenu/sidemenu';
+// import { SidemenuComponent } from '../components/sidemenu/sidemenu';
 
 
 // import { AddEventModule } from '../add-event.module';
@@ -36,20 +36,18 @@ import { SidemenuComponent } from '../components/sidemenu/sidemenu';
 
 @NgModule({
   declarations: [
-    SidemenuComponent,
     MyApp,
     LoginPage,
-    HomePage,
-    GotoPage,
-    DeliveryPage,
-    DeliveryWaitingPage,
-    DeliveryWaitingFilterPage,
-    DeliveryTakenPage,
-    DeliveryTakenFilterPage,
-    DeliveryViewPage,
+    // HomePage,
+    // GotoPage,
+    // DeliveryPage,
+    // DeliveryWaitingPage,
+    // DeliveryWaitingFilterPage,
+    // DeliveryTakenPage,
+    // DeliveryTakenFilterPage,
+    // DeliveryViewPage,
   ],
   imports: [
-    // ComponentsModule,
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpModule,

@@ -7,25 +7,61 @@
 
 <ion-header>
 	<ion-navbar>
-		<button ion-button [menuToggle]="activeMenu">
+		<!-- <button ion-button [menuToggle]="activeMenu">
 	      <ion-icon name="menu"></ion-icon>
-	    </button>
+	    </button> -->
 		<ion-title>Main Menu</ion-title>
 	</ion-navbar>
 </ion-header>
 
-<sidemenu></sidemenu>
+<!-- <sidemenu></sidemenu> -->
 
 
 <ion-content padding>
-	<ion-grid>
-		<ion-row *ngFor="let list of menu.data;">
-
-			<ion-col>
-				<button ion-button color="light" full *ngIf="this.auth.hasAccess(list.access)" (click)="this.open(list.page)">{{ list.name }}</button>
-			</ion-col>
-
-		</ion-row>
-	</ion-grid>
+	<ion-refresher (ionRefresh)="refresh($event)">
+		<ion-refresher-content
+			pullingIcon="arrow-dropdown"
+			pullingText="Pull to refresh"
+			refreshingSpinner="circles"
+			refreshingText="Refreshing..."
+		></ion-refresher-content>
+	</ion-refresher>
+	
+	<ion-list>
+		<ion-grid>
+			<ion-row class="profile">
+				<ion-col col-12 col-sm-6 col-md-3>
+					<div style="width: 12em; height: 12em;" [style.background-image]="this.util.getLocalURLImage(user.photo)" class="img-profile"></div>
+				</ion-col>
+				<ion-col col-12 col-sm-6 col-md-9>
+					<div class="name-profile">{{ user.fullname }}</div>
+					<div class="position-profile">{{ position.name }}</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+			
+	</ion-list>
+	<ion-list *ngFor="let list of menu.data;" >
+		<div *ngIf="this.auth.hasAccess(list.access)">
+			<h3>{{ list.group_name }}</h3>
+			<ion-grid>
+				<ion-row>
+					<ion-col *ngFor="let list2 of list.content;" col-12 col-sm-6 col-md-3>
+						<button ion-button color="light" full *ngIf="this.auth.hasAccess(list2.access)" (click)="this.open(list2.page)">{{ list2.name }}</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</div>
+		
+	</ion-list>
+	<ion-list>
+		<ion-grid>
+			<ion-row>
+				<ion-col>
+					<button ion-button color="danger" full (click)="logout()">Logout</button>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-list>
 </ion-content>
 

@@ -12,7 +12,7 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class EnviromentProvider {
 
-	public base_url:string = "http://127.0.0.1/edigindo/";
+	public base_url:string = "http://digindo.co.id/edigindo/";
 	public gmap_api:string = "AIzaSyBAel9fAfMQ3xomX3v_iLWJSkNUE3TSkLI";
 
 	constructor(public http: HttpClient) {
