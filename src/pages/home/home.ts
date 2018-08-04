@@ -6,9 +6,9 @@ import { Http } from '@angular/http';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
-import { LoginPage } from '../login/login';
-import { DeliveryWaitingPage } from '../delivery/delivery-waiting/delivery-waiting';
-import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
+// import { LoginPage } from '../login/login';
+// import { DeliveryWaitingPage } from '../delivery/delivery-waiting/delivery-waiting';
+// import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 
 /**
  * Generated class for the HomePage page.
@@ -17,12 +17,15 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
  * Ionic pages and navigation.
  */
 
- @IonicPage()
- @Component({
+@IonicPage({
+	name: 'home',
+	segment: 'home'
+})
+@Component({
 	selector: 'page-home',
 	templateUrl: 'home.html',
- })
- export class HomePage {
+})
+export class HomePage {
 
 		// user:any = JSON.parse(localStorage.getItem('user'));
 	// position:any = JSON.parse(localStorage.getItem('position'));
@@ -46,8 +49,8 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 				'group_name' : 'Delivery',
 				'access'     : 'list-delivery',
 				'content'    : [
-					{'page' : DeliveryWaitingPage, 'name' : 'Delivery', 'access' : 'list-delivery'},
-					{'page' : DeliveryTakenPage, 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
+					{'page' : 'delivery', 'name' : 'Delivery', 'access' : 'list-delivery'},
+					{'page' : 'courier', 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
 				]
 			}
 			
@@ -83,13 +86,13 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 				
 			}, (err) => {
 				localStorage.clear();
-				this.navCtrl.setRoot(LoginPage);
+				this.navCtrl.setRoot('LoginPage');
 				this.util.presentToast('Session Login time out!');
 			});
 		}
 		else
 		{
-			this.navCtrl.setRoot(LoginPage);
+			this.navCtrl.setRoot('LoginPage');
 		}
 
 	}
@@ -116,7 +119,7 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 				
 			}, (err) => {
 				localStorage.clear();
-				this.navCtrl.setRoot(LoginPage);
+				this.navCtrl.setRoot('LoginPage');
 				this.util.presentToast('Session Login time out!');
 			});
 		}
@@ -126,10 +129,10 @@ import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
 		this.util.showLoader('Logout...');
 		this.auth.logout().then((result) => {
 			this.util.loading.dismiss();
-			this.navCtrl.setRoot(LoginPage);
+			this.navCtrl.setRoot('LoginPage');
 		}, (err) => {
 			this.util.loading.dismiss();
-			this.navCtrl.setRoot(LoginPage);
+			this.navCtrl.setRoot('LoginPage');
 		});
 	}
 

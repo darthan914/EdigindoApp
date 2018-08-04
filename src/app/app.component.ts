@@ -3,10 +3,10 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
+// import { LoginPage } from '../pages/login/login';
+// import { HomePage } from '../pages/home/home';
 
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http } from '@angular/http';
 
 import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
@@ -35,7 +35,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 })
 export class MyApp {
 
-	rootPage:any = LoginPage;
+	rootPage:string = 'LoginPage';
 
 	constructor(
 		platform: Platform,

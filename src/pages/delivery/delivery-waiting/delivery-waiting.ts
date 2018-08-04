@@ -6,11 +6,11 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
-import { DeliveryViewPage } from '../../delivery/delivery-view/delivery-view';
-import { DeliveryWaitingFilterPage } from '../../delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
-import { GotoPage } from '../../goto/goto';
-import { LoginPage } from '../../login/login';
-import { HomePage } from '../../home/home';
+// import { DeliveryViewPage } from '../../delivery/delivery-view/delivery-view';
+// import { DeliveryWaitingFilterPage } from '../../delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
+// import { GotoPage } from '../../goto/goto';
+// import { LoginPage } from '../../login/login';
+// import { HomePage } from '../../home/home';
 
 
 /**
@@ -20,7 +20,11 @@ import { HomePage } from '../../home/home';
  * Ionic pages and navigation.
  */
 
-@IonicPage()
+@IonicPage({
+	name: 'delivery',
+	segment: 'delivery',
+	defaultHistory: ['home']
+})
 @Component({
 	selector: 'page-delivery-waiting',
 	templateUrl: 'delivery-waiting.html',
@@ -45,6 +49,7 @@ export class DeliveryWaitingPage {
     f_range  = '';
     f_when   = 'today';
     f_status = 'WAITING';
+    f_city   = '';
     f_user   = '';
     f_id     = '';
 
@@ -88,6 +93,7 @@ export class DeliveryWaitingPage {
 			f_range   : this.f_range,
 			f_when    : this.f_when,
 			f_status  : this.f_status,
+			f_city    : this.f_city,
 			f_user    : this.f_user,
 			f_id      : this.f_id,
 			s_spk     : this.s_spk,
@@ -161,6 +167,7 @@ export class DeliveryWaitingPage {
 			f_range   : this.f_range,
 			f_when    : this.f_when,
 			f_status  : this.f_status,
+			f_city    : this.f_city,
 			f_user    : this.f_user,
 			f_id      : this.f_id,
 			s_spk     : this.s_spk,
@@ -224,7 +231,7 @@ export class DeliveryWaitingPage {
 		let data = {
 	    	id: id
 	    }
-		const modal = this.modalCtrl.create(DeliveryViewPage, data);
+		const modal = this.modalCtrl.create('DeliveryViewPage', data);
 
 		modal.present();
 
@@ -243,6 +250,7 @@ export class DeliveryWaitingPage {
 			f_range   : this.f_range,
 			f_when    : this.f_when,
 			f_status  : this.f_status,
+			f_city    : this.f_city,
 			f_user    : this.f_user,
 			f_id      : this.f_id,
 			s_spk     : this.s_spk,
@@ -253,7 +261,7 @@ export class DeliveryWaitingPage {
 			order : this.order
 		}
 
-		const modal = this.modalCtrl.create(DeliveryWaitingFilterPage, passingData);
+		const modal = this.modalCtrl.create('DeliveryWaitingFilterPage', passingData);
 
 		modal.present();
 
@@ -264,6 +272,7 @@ export class DeliveryWaitingPage {
 			    this.f_range   = data.data.f_range;
 			    this.f_when    = data.data.f_when;
 			    this.f_status  = data.data.f_status;
+			    this.f_city    = data.data.f_city;
 			    this.f_user    = data.data.f_user;
 			    this.f_id      = data.data.f_id;
 
@@ -298,7 +307,7 @@ export class DeliveryWaitingPage {
 			last_page : this.last_page,
 		}
 
-		const modal = this.modalCtrl.create(GotoPage, passingData);
+		const modal = this.modalCtrl.create('GotoPage', passingData);
 
 		modal.present();
 

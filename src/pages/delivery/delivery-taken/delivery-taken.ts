@@ -8,13 +8,13 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
-import { DeliveryViewPage } from '../../delivery/delivery-view/delivery-view';
-import { DeliveryTakenFilterPage } from '../../delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
-import { GotoPage } from '../../goto/goto';
-import { LoginPage } from '../../login/login';
-import { HomePage } from '../../home/home';
+// import { DeliveryViewPage } from '../../delivery/delivery-view/delivery-view';
+// import { DeliveryTakenFilterPage } from '../../delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
+// import { GotoPage } from '../../goto/goto';
+// import { LoginPage } from '../../login/login';
+// import { HomePage } from '../../home/home';
 
-import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the DeliveryTakenPage page.
@@ -23,12 +23,16 @@ import 'rxjs/add/operator/map';
  * Ionic pages and navigation.
  */
 
- @IonicPage()
- @Component({
+@IonicPage({
+	name: 'courier',
+	segment: 'courier',
+	defaultHistory: ['home']
+})
+@Component({
  	selector: 'page-delivery-taken',
  	templateUrl: 'delivery-taken.html',
- })
- export class DeliveryTakenPage {
+})
+export class DeliveryTakenPage {
  	authData: any;
 
  	index:any     = [];
@@ -65,7 +69,7 @@ import 'rxjs/add/operator/map';
  		public auth			: AuthenticationProvider,
  		private geolocation : Geolocation,
  		private alertCtrl   : AlertController,
- 	)
+ 		)
  	{
  		
  	}
@@ -142,7 +146,7 @@ import 'rxjs/add/operator/map';
 				refresher.complete();
 				this.util.presentToast('Server Error!');
 			}
-		);
+			);
 	}
 
 	load()
@@ -223,7 +227,7 @@ import 'rxjs/add/operator/map';
 		let data = {
 			id: id
 		}
-		const modal = this.modalCtrl.create(DeliveryViewPage, data);
+		const modal = this.modalCtrl.create('DeliveryViewPage', data);
 
 		modal.present();
 
@@ -246,7 +250,7 @@ import 'rxjs/add/operator/map';
 			order : this.order
 		}
 
-		const modal = this.modalCtrl.create(DeliveryTakenFilterPage, passingData);
+		const modal = this.modalCtrl.create('DeliveryTakenFilterPage', passingData);
 
 		modal.present();
 
@@ -287,7 +291,7 @@ import 'rxjs/add/operator/map';
 			last_page : this.last_page,
 		}
 
-		const modal = this.modalCtrl.create(GotoPage, passingData);
+		const modal = this.modalCtrl.create('GotoPage', passingData);
 
 		modal.present();
 
@@ -398,7 +402,7 @@ import 'rxjs/add/operator/map';
 				console.log(distance);
 
 				let data = {
-					id							: id,
+					id				: id,
 					start_latitude	: start_latitude,
 					start_longitude : start_longitude
 				}
@@ -559,5 +563,4 @@ import 'rxjs/add/operator/map';
 			}
 			);
 	}
-
 }

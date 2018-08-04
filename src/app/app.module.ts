@@ -10,15 +10,15 @@ import { HttpClientModule/*, HttpClient*/ } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 
-import { LoginPage } from '../pages/login/login';
-import { HomePage } from '../pages/home/home';
-import { GotoPage } from '../pages/goto/goto';
-import { DeliveryPage } from '../pages/delivery/delivery';
-import { DeliveryWaitingPage } from '../pages/delivery/delivery-waiting/delivery-waiting';
-import { DeliveryWaitingFilterPage } from '../pages/delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
-import { DeliveryTakenPage } from '../pages/delivery/delivery-taken/delivery-taken';
-import { DeliveryTakenFilterPage } from '../pages/delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
-import { DeliveryViewPage } from '../pages/delivery/delivery-view/delivery-view';
+// import { LoginPage } from '../pages/login/login';
+// import { HomePage } from '../pages/home/home';
+// import { GotoPage } from '../pages/goto/goto';
+// import { DeliveryPage } from '../pages/delivery/delivery';
+// import { DeliveryWaitingPage } from '../pages/delivery/delivery-waiting/delivery-waiting';
+// import { DeliveryWaitingFilterPage } from '../pages/delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
+// import { DeliveryTakenPage } from '../pages/delivery/delivery-taken/delivery-taken';
+// import { DeliveryTakenFilterPage } from '../pages/delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
+// import { DeliveryViewPage } from '../pages/delivery/delivery-view/delivery-view';
 
 import { EnviromentProvider } from '../providers/enviroment/enviroment';
 import { UtilityProvider } from '../providers/utility/utility';
@@ -37,7 +37,7 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
+    // LoginPage,
     // HomePage,
     // GotoPage,
     // DeliveryPage,
@@ -57,15 +57,15 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    LoginPage,
-    HomePage,
-    GotoPage,
-    DeliveryPage,
-    DeliveryWaitingPage,
-    DeliveryWaitingFilterPage,
-    DeliveryTakenPage,
-    DeliveryTakenFilterPage,
-    DeliveryViewPage,
+    // LoginPage,
+    // HomePage,
+    // GotoPage,
+    // DeliveryPage,
+    // DeliveryWaitingPage,
+    // DeliveryWaitingFilterPage,
+    // DeliveryTakenPage,
+    // DeliveryTakenFilterPage,
+    // DeliveryViewPage,
   ],
   providers: [
     StatusBar,

@@ -1,13 +1,14 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, LoadingController, ToastController} from 'ionic-angular';
-import { Headers, RequestOptions } from '@angular/http';
+import { IonicPage, NavController, AlertController, LoadingController, ToastController} from 'ionic-angular';
+// import { Headers, RequestOptions } from '@angular/http';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-import { EnviromentProvider } from '../../providers/enviroment/enviroment';
+// import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../providers/utility/utility';
 
-import { HomePage } from '../home/home';
-import { DeliveryPage } from '../delivery/delivery';
+// import { HomePage } from '../home/home';
+// import { DeliveryPage } from '../delivery/delivery';
 
+@IonicPage()
 @Component({
 	selector: 'page-login',
 	templateUrl: 'login.html'
@@ -37,7 +38,7 @@ export class LoginPage {
 				{
 					localStorage.setItem('user', JSON.stringify(this.result.data.user));
 					localStorage.setItem('position', JSON.stringify(this.result.data.position));
-					this.navCtrl.setRoot(HomePage);
+					this.navCtrl.setRoot('home');
 				}
 				
 			}, (err) => {
@@ -62,7 +63,7 @@ export class LoginPage {
 				localStorage.setItem('token', this.result.data.token);
 				localStorage.setItem('user', JSON.stringify(this.result.data.user));
 				localStorage.setItem('position', JSON.stringify(this.result.data.position));
-				this.navCtrl.setRoot(HomePage);
+				this.navCtrl.setRoot('home');
 			}
 			
 		}, (err) => {

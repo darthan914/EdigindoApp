@@ -42,7 +42,7 @@ export class UtilityProvider {
 	{
 		var today = new Date(date);
 		var d:any = today.getDate();
-		var m:any = today.getMonth()+1; //January is 0!
+		var m:any = today.getMonth(); //January is 0!
 		var y = today.getFullYear().toString();
 
 		if(d  < 10){
@@ -60,7 +60,7 @@ export class UtilityProvider {
 	{
 		var today = new Date(date);
 		var d:any = today.getDate();
-		var m:any = today.getMonth()+1; //January is 0!
+		var m:any = today.getMonth(); //January is 0!
 		var y = today.getFullYear().toString();
 
 		var h:any = today.getHours();

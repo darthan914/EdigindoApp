@@ -7,9 +7,11 @@
 
 <ion-header>
 	<ion-navbar>
-		<!-- <button ion-button [menuToggle]="activeMenu">
-	      <ion-icon name="menu"></ion-icon>
-	    </button> -->
+		<ion-buttons start>
+			<button ion-button icon-only color="danger" (click)="logout()">
+				<ion-icon name="log-out"></ion-icon>
+			</button>
+		</ion-buttons>
 		<ion-title>Main Menu</ion-title>
 	</ion-navbar>
 </ion-header>

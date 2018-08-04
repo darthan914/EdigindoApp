@@ -1,12 +1,9 @@
 // import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { App, AlertController, NavController } from 'ionic-angular';
+import { App, AlertController } from 'ionic-angular';
 
-import { HomePage } from '../../pages/home/home';
-import { LoginPage } from '../../pages/login/login';
-
-import { Http, Headers, RequestOptions } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 

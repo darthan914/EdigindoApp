@@ -71,6 +71,14 @@
 		</ion-item>
 
 		<ion-item>
+			<ion-label>City</ion-label>
+			<ion-select [(ngModel)]="f_city" interface="popover">
+				<ion-option value="">All City</ion-option>
+				<ion-option *ngFor="let list of city.data" [value]="list">{{list}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item>
 			<ion-label>Limit</ion-label>
 			<ion-input type="number" placeholder="Limit Number" clearInput [(ngModel)]="limit"></ion-input>
 		</ion-item>
@@ -82,6 +90,7 @@
 				<ion-option value="delivery.project">Project</ion-option>
 				<ion-option value="delivery.spk">SPK</ion-option>
 				<ion-option value="delivery.datetime_send">Datetime Send</ion-option>
+				<ion-option value="delivery.city">City</ion-option>
 			</ion-select>
 			<ion-select [(ngModel)]="order" interface="popover">
 				<ion-option value="ASC">ASC</ion-option>

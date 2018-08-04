@@ -1,0 +1,4 @@
+ionic cordova build android --prod --release
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.jks app-release-unsigned.apk my-alias
+zipalign -v 4 app-release-unsigned.apk HelloWorld.apk
+apksigner verify HelloWorld.apk
