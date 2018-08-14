@@ -30,9 +30,9 @@ export class AuthenticationProvider {
 	{
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
-	        headers.append('Content-Type', 'application/json');
+	        headers.append('Accept', 'application/json');
 
-	        this.http.post(this.env.base_url+"api/login", JSON.stringify(credentials), {headers: headers})
+	        this.http.post(this.env.base_url+"api/login", credentials, {headers: headers})
 		          .subscribe(res => {
 		            resolve(res.json());
 		          }, (err) => {
@@ -45,9 +45,10 @@ export class AuthenticationProvider {
 	{
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
-	        headers.append('Content-Type', 'application/json');
+	        headers.append('Accept', 'application/json');
+	        headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
 
-	        this.http.post(this.env.base_url+"api/logout?token="+encodeURI(localStorage.getItem('token')), {}, {headers: headers})
+	        this.http.post(this.env.base_url+"api/logout", {}, {headers: headers})
 	          .subscribe(res => {
 	          	resolve(res.json());
 	            localStorage.clear();
@@ -59,13 +60,14 @@ export class AuthenticationProvider {
 	}
 
 
-	checkAuth(token)
+	checkAuth()
 	{
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
-	        headers.append('Content-Type', 'application/json');
+	        headers.append('Accept', 'application/json');
+	        headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
 
-	        this.http.post(this.env.base_url+"api/auth?token="+encodeURI(token), {headers: headers})
+	        this.http.post(this.env.base_url+"api/auth", {headers: headers})
 		          .subscribe(res => {
 		            resolve(res.json());
 		          }, (err) => {

@@ -36,13 +36,13 @@ export class DeliveryWaitingPage {
 	page:any      = 1;
 	last_page:any = 1;
 
-	limit:any = 10;
+	limit:any = 30;
 
 	from:any  = 0;
 	to:any    = 0;
 	total:any = 0;
 
-	sort  = 'delivery.id'
+	sort  = 'delivery.city'
 	order = 'DESC'
 
 	f_via    = '';
@@ -59,6 +59,8 @@ export class DeliveryWaitingPage {
 	enabledNextBtn:boolean = false;
 	enabledPrevBtn:boolean = false;
 
+	headers:any;
+
 	constructor(
 		public navCtrl   : NavController,
 		public navParams : NavParams,
@@ -69,24 +71,18 @@ export class DeliveryWaitingPage {
 		public auth      : AuthenticationProvider,
 	)
 	{
-		
+		this.headers = new Headers();
+		this.headers.append('Accept', 'application/json');
+        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
 	}
 
 	ionViewDidLoad() {
-		// console.log('ionViewDidLoad DeliveryWaitingPage');
 		this.load();
 	}
 
 	refresh(refresher)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			f_via     : this.f_via,
@@ -105,7 +101,7 @@ export class DeliveryWaitingPage {
 			order : this.order
 		}
 			
-		this.http.post(this.env.base_url+"api/delivery?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery", data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
@@ -153,14 +149,7 @@ export class DeliveryWaitingPage {
 
 	load()
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			f_via     : this.f_via,
@@ -180,7 +169,7 @@ export class DeliveryWaitingPage {
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery", data, options)
 			.subscribe(
 				data => {
 					if(data.json().status == "OK")
@@ -323,21 +312,14 @@ export class DeliveryWaitingPage {
 
 	take(id)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			id : id
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/take?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/take", data, options)
 			.subscribe(
 				data => {
 					this.util.loading.dismiss();

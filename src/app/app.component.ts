@@ -11,39 +11,23 @@ import { Http } from '@angular/http';
 import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 
+import { PusherProvider } from '../providers/pusher/pusher';
+
 @Component({
 	templateUrl: 'app.html',
-	// template: `
-	// 	<ion-menu [content]="sidemenu" type="overlay">
-	// 		<ion-content>
-	// 			<ion-list>
-	// 				<div class="profile">
-	// 					<div style="width: 12em; height: 12em;" [style.background-image]="this.util.getLocalURLImage(user.photo)" class="img-profile"></div>
-	// 					<div class="name-profile">{{ user.fullname }}</div>
-	// 					<div class="position-profile">{{ position.name }}</div>
-	// 				</div>
-	// 			</ion-list>
-	// 			<!-- <div class="ln_solid"></div> -->
-	// 			<ion-list>
-	// 				<ion-item *ngIf="this.auth.hasAccess('list-designRequest')">My Request Design</ion-item>
-	// 				<ion-item *ngIf="this.auth.hasAccess('list-delivery')">My List Deliver</ion-item>
-	// 				<ion-item (click)="logout()">Logout</ion-item>
-	// 			</ion-list>
-	// 		</ion-content>
-	// 	</ion-menu>
-	// `
 })
 export class MyApp {
 
 	rootPage:string = 'LoginPage';
 
 	constructor(
-		platform: Platform,
-		statusBar: StatusBar,
-		splashScreen: SplashScreen,
-		public http: Http,
-		public util      : UtilityProvider,
-		public auth      : AuthenticationProvider,
+		platform       : Platform,
+		statusBar      : StatusBar,
+		splashScreen   : SplashScreen,
+		public http    : Http,
+		public util    : UtilityProvider,
+		public auth    : AuthenticationProvider,
+		private pusher : PusherProvider,
 
 	)
 	{
@@ -52,6 +36,13 @@ export class MyApp {
 			statusBar.styleDefault();
 			splashScreen.hide();
 
+			
+
+		});
+
+		const channel = this.pusher.init();
+		channel.bind('my-event', (data) => {
+			alert(data.message);
 		});
 	}
 

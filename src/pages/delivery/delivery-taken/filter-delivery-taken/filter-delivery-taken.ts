@@ -25,8 +25,8 @@ export class DeliveryTakenFilterPage {
 	s_spk     = '';
 	s_project = '';
 
-	limit = 10;
-	sort  = 'delivery.datetime_send';
+	limit = 30;
+	sort  = 'delivery.city';
 	order = 'ASC';
 
 	constructor(
@@ -88,8 +88,8 @@ export class DeliveryTakenFilterPage {
 				s_spk     : '',
 				s_project : '',
 
-				limit : 10,
-				sort  : 'delivery.datetime_send',
+				limit : 30,
+				sort  : 'delivery.city',
 				order : 'ASC',
 			}
 		}

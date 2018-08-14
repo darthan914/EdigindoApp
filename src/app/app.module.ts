@@ -5,47 +5,20 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
-import { HttpClientModule/*, HttpClient*/ } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
-
-// import { LoginPage } from '../pages/login/login';
-// import { HomePage } from '../pages/home/home';
-// import { GotoPage } from '../pages/goto/goto';
-// import { DeliveryPage } from '../pages/delivery/delivery';
-// import { DeliveryWaitingPage } from '../pages/delivery/delivery-waiting/delivery-waiting';
-// import { DeliveryWaitingFilterPage } from '../pages/delivery/delivery-waiting/filter-delivery-waiting/filter-delivery-waiting';
-// import { DeliveryTakenPage } from '../pages/delivery/delivery-taken/delivery-taken';
-// import { DeliveryTakenFilterPage } from '../pages/delivery/delivery-taken/filter-delivery-taken/filter-delivery-taken';
-// import { DeliveryViewPage } from '../pages/delivery/delivery-view/delivery-view';
 
 import { EnviromentProvider } from '../providers/enviroment/enviroment';
 import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
-
-// import { ComponentsModule } from '../components/components.module';
-// import { SidemenuComponent } from '../components/sidemenu/sidemenu';
-
-
-// import { AddEventModule } from '../add-event.module';
-
-
-
-
+import { PusherProvider } from '../providers/pusher/pusher';
 
 @NgModule({
   declarations: [
     MyApp,
-    // LoginPage,
-    // HomePage,
-    // GotoPage,
-    // DeliveryPage,
-    // DeliveryWaitingPage,
-    // DeliveryWaitingFilterPage,
-    // DeliveryTakenPage,
-    // DeliveryTakenFilterPage,
-    // DeliveryViewPage,
   ],
   imports: [
     BrowserModule,
@@ -57,15 +30,6 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    // LoginPage,
-    // HomePage,
-    // GotoPage,
-    // DeliveryPage,
-    // DeliveryWaitingPage,
-    // DeliveryWaitingFilterPage,
-    // DeliveryTakenPage,
-    // DeliveryTakenFilterPage,
-    // DeliveryViewPage,
   ],
   providers: [
     StatusBar,
@@ -75,6 +39,8 @@ import { AuthenticationProvider } from '../providers/authentication/authenticati
     UtilityProvider,
     AuthenticationProvider,
     Geolocation,
+    PusherProvider,
+    LocalNotifications,
   ]
 })
 export class AppModule {}

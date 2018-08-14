@@ -23,6 +23,8 @@ export class DeliveryViewPage {
 	index:any = [];
 	isoDate = '';
 
+	headers:any;
+
 	constructor(
 		public viewCtrl   : ViewController,
 		public navParams : NavParams,
@@ -30,29 +32,27 @@ export class DeliveryViewPage {
 		public env       : EnviromentProvider,
 		public util      : UtilityProvider,
 	) {
+		this.headers = new Headers();
+		this.headers.append('Accept', 'application/json');
+        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+        
 		this.id = navParams.get('id');
 	}
 
+
+
 	ionViewWillLoad() {
-		// console.log('ionViewDidLoad DeliveryViewPage');
 		this.load();
 	}
 
 	load()
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {id: this.id};
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/view?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/view", data, options)
 			.subscribe(
 				data => {
 					this.util.loading.dismiss();

@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, Platform} from 'ionic-angular';
 
 import { Http } from '@angular/http';
 
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UtilityProvider } from '../../providers/utility/utility';
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
-// import { LoginPage } from '../login/login';
-// import { DeliveryWaitingPage } from '../delivery/delivery-waiting/delivery-waiting';
-// import { DeliveryTakenPage } from '../delivery/delivery-taken/delivery-taken';
+
+// import { PusherProvider } from '../../providers/pusher/pusher';
+import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /**
  * Generated class for the HomePage page.
@@ -27,20 +27,28 @@ import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 })
 export class HomePage {
 
-		// user:any = JSON.parse(localStorage.getItem('user'));
-	// position:any = JSON.parse(localStorage.getItem('position'));
-
 	constructor(
-		public app       : App,
-		public http      : Http, 
-		public navCtrl	 : NavController,
-		public navParams : NavParams,
-		public util      : UtilityProvider,
-		public env       : EnviromentProvider,
-		public auth      : AuthenticationProvider
+		public app                 : App,
+		public http                : Http, 
+		public navCtrl	           : NavController,
+		public navParams           : NavParams,
+		public util                : UtilityProvider,
+		public env                 : EnviromentProvider,
+		public auth                : AuthenticationProvider,
+		private localNotifications : LocalNotifications,
+		private plaform            : Platform,
+		// private pusher             : PusherProvider,
 	)
 	{
-
+		if(localStorage.getItem("token") == null) {
+			this.navCtrl.setRoot('LoginPage');
+		}
+		else
+		{
+			// this.pusher.init().bind('my-event', function(data) {
+			//   console.log('An event was triggered with message: ' + data.message);
+			// });
+		}
 	}
 
 	menu = {
@@ -69,38 +77,16 @@ export class HomePage {
 	ionViewDidLoad()
 	{
 		
+	}
 
-		if(localStorage.getItem("token")) {
-			this.auth.checkAuth(localStorage.getItem("token")).then((result) => {
-				this.result = result;
-				if(this.result.status == "ERROR")
-				{
-					this.util.presentToast(this.result.message);
-				}
-				else
-				{
-					localStorage.setItem('user', JSON.stringify(this.result.data.user));
-					localStorage.setItem('position', JSON.stringify(this.result.data.position));
-					
-				}
-				
-			}, (err) => {
-				localStorage.clear();
-				this.navCtrl.setRoot('LoginPage');
-				this.util.presentToast('Session Login time out!');
-			});
-		}
-		else
-		{
-			this.navCtrl.setRoot('LoginPage');
-		}
-
+	ngOnInit() {
+		
 	}
 
 	refresh(refresher)
 	{
 		if(localStorage.getItem("token")) {
-			this.auth.checkAuth(localStorage.getItem("token")).then((result) => {
+			this.auth.checkAuth().then((result) => {
 				this.result = result;
 				if(this.result.status == "ERROR")
 				{
@@ -139,12 +125,21 @@ export class HomePage {
 	open(page)
 	{
 		this.navCtrl.push(page);
-		// this.navCtrl.setRoot(DeliveryPage);
 	}
 
 	load()
 	{
 		
+	}
+
+	testNotif(){
+		this.localNotifications.schedule({
+			id: 1,
+			title: 'Test Notification',
+			text: 'Content Notification',
+			trigger: {at: new Date(new Date().getTime() + 3600)},
+			data: { data : ''}
+		})
 	}
 
 }

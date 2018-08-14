@@ -27,7 +27,7 @@ export class LoginPage {
 	) {
 		if(localStorage.getItem("token")) {
 			this.util.showLoader('Authenticating...');
-			this.auth.checkAuth(localStorage.getItem("token")).then((result) => {
+			this.auth.checkAuth().then((result) => {
 				this.util.loading.dismiss();
 				this.result = result;
 				if(this.result.status == "ERROR")

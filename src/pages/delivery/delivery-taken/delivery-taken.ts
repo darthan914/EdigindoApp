@@ -39,7 +39,7 @@ export class DeliveryTakenPage {
  	page:any      = 1;
  	last_page:any = 1;
 
- 	limit:any = 10;
+ 	limit:any = 30;
 
  	from:any  = 0;
  	to:any    = 0;
@@ -58,6 +58,9 @@ export class DeliveryTakenPage {
  	enabledNextBtn:boolean = false;
  	enabledPrevBtn:boolean = false;
 
+
+ 	headers:any;
+
  	constructor(
 
  		public navCtrl	    : NavController,
@@ -71,24 +74,18 @@ export class DeliveryTakenPage {
  		private alertCtrl   : AlertController,
  		)
  	{
- 		
+ 		this.headers = new Headers();
+		this.headers.append('Accept', 'application/json');
+        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
  	}
 
  	ionViewWillLoad() {
-		// console.log('ionViewDidLoad DeliveryTakenPage');
 		this.load();
 	}
 
 	refresh(refresher)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			f_when	  : this.f_when,
@@ -103,7 +100,7 @@ export class DeliveryTakenPage {
 			order : this.order
 		}
 
-		this.http.post(this.env.base_url+"api/delivery/courier?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/courier", data, options)
 		.subscribe(
 			data => { 
 				if(data.json().status == "OK")
@@ -111,9 +108,9 @@ export class DeliveryTakenPage {
 					refresher.complete();
 					this.index = data.json().data.data;
 
-					this.from			= data.json().data.from;
-					this.to				= data.json().data.to;
-					this.total		 = data.json().data.total;
+					this.from      = data.json().data.from;
+					this.to        = data.json().data.to;
+					this.total     = data.json().data.total;
 					this.last_page = data.json().data.last_page;
 
 					if(data.json().data.next_page_url != null)
@@ -151,14 +148,7 @@ export class DeliveryTakenPage {
 
 	load()
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			f_when	  : this.f_when,
@@ -174,7 +164,7 @@ export class DeliveryTakenPage {
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/courier?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/courier", data, options)
 		.subscribe(
 			data => {
 				console.log(data.json());
@@ -307,21 +297,14 @@ export class DeliveryTakenPage {
 
 	undoTake(id)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			id : id
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoTake?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/undoTake", data, options)
 		.subscribe(
 			data => {
 				this.util.loading.dismiss();
@@ -337,7 +320,7 @@ export class DeliveryTakenPage {
 				this.util.loading.dismiss();
 				this.util.presentToast('Server Error!');
 			}
-			);
+		);
 	}
 
 
@@ -351,14 +334,7 @@ export class DeliveryTakenPage {
 			start_latitude	= resp.coords.latitude;
 			start_longitude = resp.coords.longitude;
 
-			var headers = new Headers();
-			headers.append('Content-Type', 'application/json');
-			// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-			// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-			// headers.append('Accept','application/json');
-			// headers.append('content-type','application/json');
-
-			let options = new RequestOptions({ headers: headers });
+			let options = new RequestOptions({ headers: this.headers });
 
 			console.log(distance);
 
@@ -370,7 +346,7 @@ export class DeliveryTakenPage {
 			}
 
 			this.util.showLoader('Loading...');
-			this.http.post(this.env.base_url+"api/delivery/startSend?token="+encodeURI(localStorage.getItem('token')), data, options)
+			this.http.post(this.env.base_url+"api/delivery/startSend", data, options)
 			.subscribe(
 				data => {
 					this.util.loading.dismiss();
@@ -388,16 +364,9 @@ export class DeliveryTakenPage {
 				}
 				);
 		}).catch((error) => {
-			console.log('Error getting location', error);
+				console.log('Error getting location', error);
 
-			var headers = new Headers();
-			headers.append('Content-Type', 'application/json');
-				// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-				// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-				// headers.append('Accept','application/json');
-				// headers.append('content-type','application/json');
-
-				let options = new RequestOptions({ headers: headers });
+				let options = new RequestOptions({ headers: this.headers });
 
 				console.log(distance);
 
@@ -408,7 +377,7 @@ export class DeliveryTakenPage {
 				}
 
 				this.util.showLoader('Loading...');
-				this.http.post(this.env.base_url+"api/delivery/startSend?token="+encodeURI(localStorage.getItem('token')), data, options)
+				this.http.post(this.env.base_url+"api/delivery/startSend", data, options)
 				.subscribe(
 					data => {
 						this.util.loading.dismiss();
@@ -430,21 +399,14 @@ export class DeliveryTakenPage {
 
 	undoStartSend(id)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			id : id
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoStartSend?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/undoStartSend", data, options)
 		.subscribe(
 			data => {
 				this.util.loading.dismiss();
@@ -469,38 +431,30 @@ export class DeliveryTakenPage {
 		let alert = this.alertCtrl.create({
 			title: 'Enter Name Reciever',
 			inputs: [
-			{
-				name: 'received_by',
-				placeholder: 'Received By'
-			},
+				{
+					name: 'received_by',
+					placeholder: 'Received By'
+				},
 			],
 			buttons: [
-			{
-				text: 'Cancel',
-				role: 'cancel',
-				handler: data => {
-				}
-			},
-			{
-				text: 'Submit',
-				handler: get => {
-					if (get.received_by != '') {
-						var headers = new Headers();
-						headers.append('Content-Type', 'application/json');
-							// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-							// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-							// headers.append('Accept','application/json');
-							// headers.append('content-type','application/json');
-
-							let options = new RequestOptions({ headers: headers });
-
+				{
+					text: 'Cancel',
+					role: 'cancel',
+					handler: data => {
+					}
+				},
+				{
+					text: 'Submit',
+					handler: get => {
+						if (get.received_by != '') {
+							let options = new RequestOptions({ headers: this.headers });
 							let data = {
 								id : id,
 								received_by : get.received_by
 							}
 
 							this.util.showLoader('Loading...');
-							this.http.post(this.env.base_url+"api/delivery/finish?token="+encodeURI(localStorage.getItem('token')), data, options)
+							this.http.post(this.env.base_url+"api/delivery/finish", data, options)
 							.subscribe(
 								data => {
 									this.util.loading.dismiss();
@@ -516,14 +470,16 @@ export class DeliveryTakenPage {
 									this.util.loading.dismiss();
 									this.util.presentToast('Server Error!');
 								}
-								);
-						} else {
+							);
+							} 
+						else
+						{
 							this.util.presentToast('Enter the name recieved');
 						}
 					}
 				}
-				]
-			});
+			]
+		});
 		alert.present();
 
 		
@@ -531,21 +487,14 @@ export class DeliveryTakenPage {
 
 	undoFinish(id)
 	{
-		var headers = new Headers();
-		headers.append('Content-Type', 'application/json');
-		// headers.append('Access-Control-Allow-Origin' , this.env.base_url);
-		// headers.append('Access-Control-Allow-Methods', 'POST, GET, OPTIONS, PUT');
-		// headers.append('Accept','application/json');
-		// headers.append('content-type','application/json');
-
-		let options = new RequestOptions({ headers: headers });
+		let options = new RequestOptions({ headers: this.headers });
 
 		let data = {
 			id : id
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/delivery/undoFinish?token="+encodeURI(localStorage.getItem('token')), data, options)
+		this.http.post(this.env.base_url+"api/delivery/undoFinish", data, options)
 		.subscribe(
 			data => {
 				this.util.loading.dismiss();
