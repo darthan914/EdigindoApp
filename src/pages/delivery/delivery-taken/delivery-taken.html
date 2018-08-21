@@ -11,7 +11,7 @@
 
 	<ion-navbar>
 
-	    <ion-title>My List Job Delivery</ion-title>
+	    <ion-title>Daftar Tugas Pengiriman</ion-title>
 	    <ion-buttons end>
 			<button ion-button icon-only color="dark" (click)="this.filter()">
 				<ion-icon name="search"></ion-icon>
@@ -43,101 +43,93 @@
 			</ion-col>
 		</ion-row>
 
-		<ion-row>
-			<ion-col col-sm-6 col-12 *ngFor="let list of index;">
-				<ion-card>
-					<ion-card-content>
-						<ion-grid>
-							<ion-row>
-								<ion-col col-9>
-									<p>
-										<b>{{ list.city }} - {{ list.project }}</b>
-									</p>
-									<p>
-										Date Send : {{ this.util.datetimeFormat(list.datetime_send) }}
-									</p>
-									<p>
-										<ion-chip>
-											<ion-label>{{ list.status }}</ion-label>
-										</ion-chip>
-									</p>
-								</ion-col>
-								<ion-col col-3>
-									<div *ngIf="list.status == 'TAKEN'">
-										<ion-row *ngIf="this.auth.hasAccess('undoTake-delivery')">
-											<ion-col col-12>
-												<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
-											</ion-col>
-											<ion-col col-12>
-												<button ion-button full color="success" icon-only small (click)="startSend(list.id)"><ion-icon name="paper-plane"></ion-icon></button>
-											</ion-col>
-											<ion-col col-12>
-												<button ion-button full color="warning" icon-only small (click)="undoTake(list.id)">
-													<ion-icon name="undo"></ion-icon>
-												</button>
-											</ion-col>
-										</ion-row>
+		<ion-row *ngFor="let list_group of group;">
+			<ion-col>
+				<h4 *ngIf="this.current_group != list_group.city">
+					{{ list_group.city }}
+				</h4>
+				<div *ngFor="let list of index;">
+					<div *ngIf="list_group.city == list.city" class="border-list">
+						<ion-row>
+							<ion-col col-8>
+								<p>
+									<ion-chip>
+										<ion-label>{{ list.status }}</ion-label>
+									</ion-chip>
+									<b>{{ list.project }}</b> - {{ list.name }}
+								</p>
+							</ion-col>
+							<ion-col col-4>
+								<div *ngIf="list.status == 'TAKEN'">
+									<ion-row *ngIf="this.auth.hasAccess('undoTake-delivery')">
+										<ion-col col-4>
+											<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
+										</ion-col>
+										<ion-col col-4>
+											<button ion-button full color="success" icon-only small (click)="startSend(list.id)"><ion-icon name="paper-plane"></ion-icon></button>
+										</ion-col>
+										<ion-col col-4>
+											<button ion-button full color="warning" icon-only small (click)="undoTake(list.id)">
+												<ion-icon name="undo"></ion-icon>
+											</button>
+										</ion-col>
+									</ion-row>
 
-										<ion-row *ngIf="!this.auth.hasAccess('undoTake-delivery')">
-											<ion-col col-12>
-												<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
-											</ion-col>
-											<ion-col col-12>
-												<button ion-button full color="success" icon-only small (click)="startSend(list.id)"><ion-icon name="paper-plane"></ion-icon></button>
-											</ion-col>
-										</ion-row>
-									</div>
+									<ion-row *ngIf="!this.auth.hasAccess('undoTake-delivery')">
+										<ion-col col-6>
+											<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
+										</ion-col>
+										<ion-col col-6>
+											<button ion-button full color="success" icon-only small (click)="startSend(list.id)"><ion-icon name="paper-plane"></ion-icon></button>
+										</ion-col>
+									</ion-row>
+								</div>
 
-									<div *ngIf="list.status == 'SENDING'">
-										<ion-row>
-											<ion-col col-12>
-												<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
-											</ion-col>
-											<ion-col col-12>
-												<button ion-button full color="success" icon-only small (click)="finish(list.id)"><ion-icon name="checkmark"></ion-icon></button>
-											</ion-col>
-											<ion-col col-12>
-												<button ion-button full color="warning" icon-only small (click)="undoStartSend(list.id)">
-													<ion-icon name="undo"></ion-icon>
-												</button>
-											</ion-col>
-										</ion-row>
+								<div *ngIf="list.status == 'SENDING'">
+									<ion-row>
+										<ion-col col-4>
+											<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
+										</ion-col>
+										<ion-col col-4>
+											<button ion-button full color="success" icon-only small (click)="finish(list.id)"><ion-icon name="checkmark"></ion-icon></button>
+										</ion-col>
+										<ion-col col-4>
+											<button ion-button full color="warning" icon-only small (click)="undoStartSend(list.id)">
+												<ion-icon name="undo"></ion-icon>
+											</button>
+										</ion-col>
+									</ion-row>
 
-									</div>
+								</div>
 
-									<div *ngIf="list.status == 'FINISH'">
-										<ion-row>
-											<ion-col col-12>
-												<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
-											</ion-col>
+								<div *ngIf="list.status == 'FINISH'">
+									<ion-row>
+										<ion-col col-6>
+											<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
+										</ion-col>
 
-											<ion-col col-12>
-												<button ion-button full color="warning" icon-only small (click)="undoFinish(list.id)">
-													<ion-icon name="undo"></ion-icon>
-												</button>
-											</ion-col>
-										</ion-row>
+										<ion-col col-6>
+											<button ion-button full color="warning" icon-only small (click)="undoFinish(list.id)">
+												<ion-icon name="undo"></ion-icon>
+											</button>
+										</ion-col>
+									</ion-row>
 
-									</div>
+								</div>
 
-									<div *ngIf="list.status == 'SUCCESS' || list.status == 'FAILED'">
-										<ion-row>
-											<ion-col col-12>
-												<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
-											</ion-col>
-										</ion-row>
+								<div *ngIf="list.status == 'SUCCESS' || list.status == 'FAILED'">
+									<ion-row>
+										<ion-col col-12>
+											<button ion-button full icon-only small (click)="view(list.id)"><ion-icon name="eye"></ion-icon></button>
+										</ion-col>
+									</ion-row>
 
-									</div>
-								</ion-col>
-							</ion-row>
-						</ion-grid>
-						
-						
-									
-					</ion-card-content>
-				</ion-card>
+								</div>
+							</ion-col>
+						</ion-row>
+					</div>
+				</div>
 			</ion-col>
-
 		</ion-row>
 
 		<ion-row>

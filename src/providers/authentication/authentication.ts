@@ -1,8 +1,6 @@
 // import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { App, AlertController } from 'ionic-angular';
-
 import { Http, Headers } from '@angular/http';
 
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
@@ -16,6 +14,8 @@ import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 @Injectable()
 export class AuthenticationProvider {
 
+	token;
+
 	constructor(
 		public http      : Http,
 		public env       : EnviromentProvider,
@@ -23,7 +23,7 @@ export class AuthenticationProvider {
 		public alertCtrl : AlertController,
 	)
 	{
-		// this.auth();
+		this.token = localStorage.getItem('token');
 	}
 
 	login(credentials)
@@ -46,7 +46,7 @@ export class AuthenticationProvider {
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
 	        headers.append('Accept', 'application/json');
-	        headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+	        headers.append('Authorization', 'Bearer '+this.token);
 
 	        this.http.post(this.env.base_url+"api/logout", {}, {headers: headers})
 	          .subscribe(res => {
@@ -65,7 +65,7 @@ export class AuthenticationProvider {
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
 	        headers.append('Accept', 'application/json');
-	        headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+	        headers.append('Authorization', 'Bearer '+this.token);
 
 	        this.http.post(this.env.base_url+"api/auth", {headers: headers})
 		          .subscribe(res => {

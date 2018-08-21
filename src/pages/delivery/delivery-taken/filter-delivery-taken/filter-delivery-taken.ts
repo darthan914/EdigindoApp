@@ -83,7 +83,6 @@ export class DeliveryTakenFilterPage {
 			data: {
 				f_when    : 'all',
 				f_status  : '',
-				f_user    : '',
 				f_id      : '',
 				s_spk     : '',
 				s_project : '',

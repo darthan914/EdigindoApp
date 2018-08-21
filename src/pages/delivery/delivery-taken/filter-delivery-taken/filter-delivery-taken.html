@@ -21,33 +21,34 @@
 <ion-content padding>
 	<ion-list>
 		<ion-item>
-			<ion-input placeholder="Search SPK" clearInput [(ngModel)]="s_spk"></ion-input>
+			<ion-input placeholder="Cari SPK" clearInput [(ngModel)]="s_spk"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-input placeholder="Search Project" clearInput [(ngModel)]="s_project"></ion-input>
+			<ion-input placeholder="Cari Proyek" clearInput [(ngModel)]="s_project"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>When</ion-label>
+			<ion-label>Waktu</ion-label>
 			<ion-select [(ngModel)]="f_when" interface="popover">
-				<ion-option value="all">All Day</ion-option>
-				<ion-option value="today">Today</ion-option>
-				<ion-option value="tomorrow">Tomorrow</ion-option>
-				<ion-option value="future">Future</ion-option>
-				<ion-option value="yesterday">Yesterday</ion-option>
+				<ion-option value="all">Semua</ion-option>
+				<ion-option value="today">Hari Ini</ion-option>
+				<ion-option value="tomorrow">Besok</ion-option>
+				<ion-option value="future">Masa Depan</ion-option>
+				<ion-option value="yesterday">Kemarin</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item>
 			<ion-label>Status</ion-label>
 			<ion-select [(ngModel)]="f_status" interface="popover">
-				<ion-option value="">All Status</ion-option>
-				<ion-option value="SENDING">Sending</ion-option>
-				<ion-option value="TAKEN">Taken</ion-option>
-				<ion-option value="FINISH">Finish</ion-option>
-				<ion-option value="SUCCESS">Success</ion-option>
-				<ion-option value="FAILED">Failed</ion-option>
+				<ion-option value="">Semua</ion-option>
+				<ion-option value="WAITING">Menunggu</ion-option>
+				<ion-option value="SENDING">Mengirim</ion-option>
+				<ion-option value="TAKEN">Diambil</ion-option>
+				<ion-option value="FINISH">Selesai</ion-option>
+				<ion-option value="SUCCESS">Berhasil</ion-option>
+				<ion-option value="FAILED">Gagal</ion-option>
 			</ion-select>
 		</ion-item>
 
@@ -59,15 +60,15 @@
 		<ion-item>
 			<ion-label>Order By</ion-label>
 			<ion-select [(ngModel)]="sort" interface="popover">
-				<ion-option value="delivery.id">Default</ion-option>
-				<ion-option value="delivery.project">Project</ion-option>
+				<ion-option value="delivery.id">Terakhir Masuk</ion-option>
+				<ion-option value="delivery.project">Nama Proyek</ion-option>
 				<ion-option value="delivery.spk">SPK</ion-option>
-				<ion-option value="delivery.datetime_send">Datetime Send</ion-option>
-				<ion-option value="delivery.city">City</ion-option>
+				<ion-option value="delivery.datetime_send">Tanggal Kirim</ion-option>
+				<ion-option value="delivery.city">Kota</ion-option>
 			</ion-select>
 			<ion-select [(ngModel)]="order" interface="popover">
-				<ion-option value="ASC">ASC</ion-option>
-				<ion-option value="DESC">DESC</ion-option>
+				<ion-option value="ASC">Menaik</ion-option>
+				<ion-option value="DESC">Menurun</ion-option>
 			</ion-select>
 		</ion-item>
 

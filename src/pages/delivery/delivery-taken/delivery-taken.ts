@@ -36,6 +36,7 @@ export class DeliveryTakenPage {
  	authData: any;
 
  	index:any     = [];
+ 	group:any     = [];
  	page:any      = 1;
  	last_page:any = 1;
 
@@ -106,12 +107,13 @@ export class DeliveryTakenPage {
 				if(data.json().status == "OK")
 				{
 					refresher.complete();
-					this.index = data.json().data.data;
+					this.index = data.json().data.index.data;
+					this.group = data.json().data.group;
 
-					this.from      = data.json().data.from;
-					this.to        = data.json().data.to;
-					this.total     = data.json().data.total;
-					this.last_page = data.json().data.last_page;
+					this.from      = data.json().data.index.from;
+					this.to        = data.json().data.index.to;
+					this.total     = data.json().data.index.total;
+					this.last_page = data.json().data.index.last_page;
 
 					if(data.json().data.next_page_url != null)
 					{
@@ -172,12 +174,13 @@ export class DeliveryTakenPage {
 				if(data.json().status == "OK")
 				{
 					this.util.loading.dismiss();
-					this.index = data.json().data.data;
+					this.index = data.json().data.index.data;
+					this.group = data.json().data.group;
 
-					this.from      = data.json().data.from;
-					this.to        = data.json().data.to;
-					this.total     = data.json().data.total;
-					this.last_page = data.json().data.last_page;
+					this.from      = data.json().data.index.from;
+					this.to        = data.json().data.index.to;
+					this.total     = data.json().data.index.total;
+					this.last_page = data.json().data.index.last_page;
 
 					if(data.json().data.next_page_url != null)
 					{
@@ -433,12 +436,12 @@ export class DeliveryTakenPage {
 			inputs: [
 				{
 					name: 'received_by',
-					placeholder: 'Received By'
+					placeholder: 'Nama penerima'
 				},
 			],
 			buttons: [
 				{
-					text: 'Cancel',
+					text: 'Batal',
 					role: 'cancel',
 					handler: data => {
 					}
@@ -474,7 +477,7 @@ export class DeliveryTakenPage {
 							} 
 						else
 						{
-							this.util.presentToast('Enter the name recieved');
+							this.util.presentToast('masukan nama penerima');
 						}
 					}
 				}

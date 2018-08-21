@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { LoadingController, ToastController} from 'ionic-angular';
 
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 import { DomSanitizer/*, SafeResourceUrl, SafeUrl*/ } from '@angular/platform-browser';
+
+import { Http, Headers } from '@angular/http';
 
 /*
   Generated class for the UtilityProvider provider.
@@ -18,7 +20,7 @@ export class UtilityProvider {
 	loading: any;
 
 	constructor(
-		public http        : HttpClient,
+		public http        : Http,
 		private sanitizer  : DomSanitizer,
 		private env        : EnviromentProvider,
 		public loadingCtrl : LoadingController,
@@ -110,6 +112,21 @@ export class UtilityProvider {
 		});
 
 		toast.present();
+	}
+
+	getData(url, request = null){
+		return new Promise((resolve, reject) => {
+	        let headers = new Headers();
+	        headers.append('Accept', 'application/json');
+	        headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+
+	        this.http.post(this.env.base_url+url, request, {headers: headers})
+		          .subscribe(res => {
+		            resolve(res.json());
+		          }, (err) => {
+		            reject(err);
+		          });
+	    });
 	}
 
 

@@ -54,11 +54,11 @@ export class HomePage {
 	menu = {
 		'data' : [
 			{
-				'group_name' : 'Delivery',
+				'group_name' : 'Pengiriman',
 				'access'     : 'list-delivery',
 				'content'    : [
-					{'page' : 'delivery', 'name' : 'Delivery', 'access' : 'list-delivery'},
-					{'page' : 'courier', 'name' : 'Delivery Taken', 'access' : 'courier-delivery'}
+					{'page' : 'delivery', 'name' : 'Daftar Pengiriman', 'access' : 'list-delivery'},
+					{'page' : 'courier', 'name' : 'Tugas Pengiriman', 'access' : 'courier-delivery'}
 				]
 			}
 			
