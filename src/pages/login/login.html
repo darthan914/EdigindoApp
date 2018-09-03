@@ -1,23 +1,30 @@
 
 <ion-content padding center text-center>
 	<ion-title>Edigindo</ion-title>
-	<ion-list>
 
-		<ion-item>
-			<ion-label floating>Username</ion-label>
-			<ion-input type="text" [(ngModel)]="loginData.username"></ion-input>
-		</ion-item>
+	<form #loginForm="ngForm" novalidate>
+    <ion-list no-lines>
+      <ion-item>
+        <ion-label floating color="primary">Username</ion-label>
+        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
+          required>
+        </ion-input>
+      </ion-item>
 
-		<ion-item>
-			<ion-label floating>Password</ion-label>
-			<ion-input type="password"	[(ngModel)]="loginData.password"></ion-input>
-		</ion-item>
+      <ion-item>
+        <ion-label floating color="primary">Password</ion-label>
+        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
+        </ion-input>
+      </ion-item>
 
-	</ion-list>
+    </ion-list>
 
-	<div padding>
-		<button ion-button block (click)="this.login()">Masuk</button>
-	</div>
+    <ion-row responsive-sm>
+      <button ion-button (click)="onLogin(loginForm)" type="submit" block full>Login</button>
+    </ion-row>
+
+  </form>
+
 </ion-content>
 
 

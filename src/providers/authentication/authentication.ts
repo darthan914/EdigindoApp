@@ -60,14 +60,14 @@ export class AuthenticationProvider {
 	}
 
 
-	checkAuth()
+	auth()
 	{
 		return new Promise((resolve, reject) => {
 	        let headers = new Headers();
 	        headers.append('Accept', 'application/json');
 	        headers.append('Authorization', 'Bearer '+this.token);
 
-	        this.http.post(this.env.base_url+"api/auth", {headers: headers})
+	        this.http.post(this.env.base_url+"api/auth", {}, {headers: headers})
 		          .subscribe(res => {
 		            resolve(res.json());
 		          }, (err) => {

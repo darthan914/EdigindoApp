@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController, LoadingController, ToastController} from 'ionic-angular';
-// import { Headers, RequestOptions } from '@angular/http';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
-// import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../providers/utility/utility';
 
 // import { HomePage } from '../home/home';
 // import { DeliveryPage } from '../delivery/delivery';
 
-@IonicPage()
+@IonicPage({
+	name: 'login',
+	segment: 'login'
+})
 @Component({
 	selector: 'page-login',
 	templateUrl: 'login.html'
 })
 export class LoginPage {
-	loginData = { username:'', password:'' };
+	login: any = {username: '', password: ''};
 	result: any;
 
 	constructor(
@@ -24,10 +25,10 @@ export class LoginPage {
 		public toastCtrl   : ToastController,
 		public auth        : AuthenticationProvider,
 		public util        : UtilityProvider,
-	) {
+		) {
 		if(localStorage.getItem("token")) {
 			this.util.showLoader('Authenticating...');
-			this.auth.checkAuth().then((result) => {
+			this.auth.auth().then((result) => {
 				this.util.loading.dismiss();
 				this.result = result;
 				if(this.result.status == "ERROR")
@@ -49,9 +50,9 @@ export class LoginPage {
 		}
 	}
 
-	login() {
+	onLogin() {
 		this.util.showLoader('Authenticating...');
-		this.auth.login(this.loginData).then((result) => {
+		this.auth.login(this.login).then((result) => {
 			this.util.loading.dismiss();
 			this.result = result;
 			if(this.result.status == "ERROR")
@@ -68,7 +69,6 @@ export class LoginPage {
 			
 		}, (err) => {
 			this.util.loading.dismiss();
-			// this.presentToast(err);
 			this.util.presentToast('Server Not Found!');
 		});
 	}

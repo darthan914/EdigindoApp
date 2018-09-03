@@ -18,7 +18,7 @@ import { PusherProvider } from '../providers/pusher/pusher';
 })
 export class MyApp {
 
-	rootPage:string = 'LoginPage';
+	rootPage:string = 'login';
 
 	constructor(
 		platform       : Platform,

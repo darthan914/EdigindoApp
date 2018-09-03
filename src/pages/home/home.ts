@@ -86,7 +86,7 @@ export class HomePage {
 	refresh(refresher)
 	{
 		if(localStorage.getItem("token")) {
-			this.auth.checkAuth().then((result) => {
+			this.auth.auth().then((result) => {
 				this.result = result;
 				if(this.result.status == "ERROR")
 				{
@@ -105,20 +105,20 @@ export class HomePage {
 				
 			}, (err) => {
 				localStorage.clear();
-				this.navCtrl.setRoot('LoginPage');
+				this.navCtrl.setRoot('login');
 				this.util.presentToast('Session Login time out!');
 			});
 		}
 	}
 
-	logout() {
+	onLogout() {
 		this.util.showLoader('Logout...');
 		this.auth.logout().then((result) => {
 			this.util.loading.dismiss();
-			this.navCtrl.setRoot('LoginPage');
+			this.navCtrl.setRoot('login');
 		}, (err) => {
 			this.util.loading.dismiss();
-			this.navCtrl.setRoot('LoginPage');
+			this.navCtrl.setRoot('login');
 		});
 	}
 
