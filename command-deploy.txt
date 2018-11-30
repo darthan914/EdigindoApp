@@ -1,7 +1,7 @@
 ionic cordova build android --prod --release
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore my-release-key.jks platforms\android\build\outputs\apk\release\android-release-unsigned.apk my-alias
-zipalign -v 4 platforms\android\build\outputs\apk\release\android-release-unsigned.apk edigindo-0.2.1.apk
-apksigner verify edigindo-0.2.1.apk
+zipalign -v 4 platforms\android\build\outputs\apk\release\android-release-unsigned.apk edigindo-0.3.0.apk
+apksigner verify edigindo-0.3.0.apk
 
 // API
 keytool -list -v -keystore my-release-key.jks

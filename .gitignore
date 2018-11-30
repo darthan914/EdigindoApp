@@ -35,3 +35,4 @@ Thumbs.db
 UserInterfaceState.xcuserstate
 Edigindo.apk
 app-release-unsigned.apk
+src/providers/enviroment/enviroment.ts
