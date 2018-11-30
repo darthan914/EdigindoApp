@@ -11,7 +11,7 @@ import { Http } from '@angular/http';
 import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 
-import { PusherProvider } from '../providers/pusher/pusher';
+// import { PusherProvider } from '../providers/pusher/pusher';
 
 @Component({
 	templateUrl: 'app.html',
@@ -27,7 +27,7 @@ export class MyApp {
 		public http    : Http,
 		public util    : UtilityProvider,
 		public auth    : AuthenticationProvider,
-		private pusher : PusherProvider,
+		// private pusher : PusherProvider,
 
 	)
 	{
@@ -40,10 +40,10 @@ export class MyApp {
 
 		});
 
-		const channel = this.pusher.init();
-		channel.bind('my-event', (data) => {
-			alert(data.message);
-		});
+		// const channel = this.pusher.init();
+		// channel.bind('my-event', (data) => {
+		// 	alert(data.message);
+		// });
 	}
 
 	

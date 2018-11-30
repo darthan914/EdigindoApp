@@ -16,16 +16,24 @@ import { IonicPage, ViewController, NavParams } from 'ionic-angular';
 export class GotoPage {
 
 	number = [];
-	last_page = 0;
+	paginateData:any = {
+		page           : 1,
+		last_page      : 1,
+		from           : 0,
+		to             : 0,
+		total          : 0,
+		enabledNextBtn : false,
+		enabledPrevBtn : false,
+	}
 
 	constructor(public viewCtrl  : ViewController, public navParams: NavParams) {
 	}
 
 
 	ionViewWillLoad() {
-	this.last_page   = this.navParams.get('last_page');
+	this.paginateData   = this.navParams.get('paginateData');
 
-		for(let i=0; i < this.last_page; i++){ // n is array.length
+		for(let i=0; i < this.paginateData.last_page; i++){ // n is array.length
 			this.number.push({ index : i+1 });
 		}
 	}

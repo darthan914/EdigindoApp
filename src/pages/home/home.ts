@@ -53,6 +53,21 @@ export class HomePage {
 
 	menu = {
 		'data' : [
+			// {
+			// 	'group_name' : 'Purchasing',
+			// 	'access'     : 'list-listRequest',
+			// 	'content'    : [
+			// 		{'page' : 'purchasing-request', 'name' : 'Request', 'access' : 'list-listRequest'},
+			// 	]
+			// },
+
+			{
+				'group_name' : 'CRM',
+				'access'     : 'list-crm',
+				'content'    : [
+					{'page' : 'crm', 'name' : 'List CRM', 'access' : 'list-crm'},
+				]
+			},
 			{
 				'group_name' : 'Pengiriman',
 				'access'     : 'list-delivery',

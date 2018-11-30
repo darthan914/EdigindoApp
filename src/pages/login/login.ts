@@ -27,26 +27,28 @@ export class LoginPage {
 		public util        : UtilityProvider,
 		) {
 		if(localStorage.getItem("token")) {
-			this.util.showLoader('Authenticating...');
-			this.auth.auth().then((result) => {
-				this.util.loading.dismiss();
-				this.result = result;
-				if(this.result.status == "ERROR")
-				{
-					this.util.presentToast(this.result.message);
-				}
-				else
-				{
-					localStorage.setItem('user', JSON.stringify(this.result.data.user));
-					localStorage.setItem('position', JSON.stringify(this.result.data.position));
-					this.navCtrl.setRoot('home');
-				}
+			this.navCtrl.setRoot('home');
+			
+			// this.util.showLoader('Authenticating...');
+			// this.auth.auth().then((result) => {
+			// 	this.util.loading.dismiss();
+			// 	this.result = result;
+			// 	if(this.result.status == "ERROR")
+			// 	{
+			// 		this.util.presentToast(this.result.message);
+			// 	}
+			// 	else
+			// 	{
+			// 		localStorage.setItem('user', JSON.stringify(this.result.data.user));
+			// 		localStorage.setItem('position', JSON.stringify(this.result.data.position));
+			// 		this.navCtrl.setRoot('home');
+			// 	}
 				
-			}, (err) => {
-				localStorage.clear();
-				this.util.loading.dismiss();
-				this.util.presentToast('Session Login time out!');
-			});
+			// }, (err) => {
+			// 	localStorage.clear();
+			// 	this.util.loading.dismiss();
+			// 	this.util.presentToast('Session Login time out!');
+			// });
 		}
 	}
 

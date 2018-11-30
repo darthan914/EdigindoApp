@@ -58,11 +58,51 @@ export class UtilityProvider {
 		return d+'/'+m+'/'+y;
 	}
 
-	datetimeFormat(date)
+	datePHPFormat(date)
 	{
 		var today = new Date(date);
 		var d:any = today.getDate();
 		var m:any = today.getMonth(); //January is 0!
+		var y = today.getFullYear().toString();
+
+		if(d  < 10){
+		    d = ("0" + d).slice(-2);
+		}
+
+		if(m < 10){
+		    m = ("0" + (m+1)).slice(-2);
+		}
+
+		return y+'-'+m+'-'+d;
+	}
+
+	timeFormat(date)
+	{
+		var today = new Date(date);
+		var h:any = today.getUTCHours();
+		var i:any = today.getUTCMinutes();
+		var s:any = today.getUTCSeconds();
+
+		if(h < 10){
+		    h = ("0" + h).slice(-2);
+		} 
+
+		if(i < 10){
+		    i = ("0" + i).slice(-2);
+		}
+
+		if(s < 10){
+		    s = ("0" + s).slice(-2);
+		}
+
+		return h+':'+i+':'+s;
+	}
+
+	datetimeFormat(date)
+	{
+		var today = new Date(date);
+		var d:any = today.getDate();
+		var m:any = today.getMonth() + 1; //January is 0!
 		var y = today.getFullYear().toString();
 
 		var h:any = today.getHours();
@@ -127,6 +167,17 @@ export class UtilityProvider {
 		            reject(err);
 		          });
 	    });
+	}
+
+	stringToBoolean(string):boolean{
+		if(string.toUpperCase() ===  "TRUE")
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 
 

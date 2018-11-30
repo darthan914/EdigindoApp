@@ -1,0 +1,62 @@
+<!--
+	Generated template for the DeliveryViewPage page.
+
+	See http://ionicframework.com/docs/components/#navigation for more info on
+	Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+
+		<ion-title>Detail Pengiriman</ion-title>
+
+		<ion-buttons end>
+			<button ion-button icon-only color="danger" (click)="this.close()">
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+		
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-grid>
+		
+		<ion-row>
+			<ion-col col-4><h3>Dari</h3></ion-col>
+			<ion-col col-8>
+				({{ index.name }} - {{ index.user_phone }})<br/>
+				Ambil :  {{ index.get_from }}<br/>
+				Pos   :  {{ this.util.datetimeFormat(index.created_at) }}<br/>
+				Tiba  :  {{ this.util.datetimeFormat(index.datetime_send) }}
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col col-4><h3>Ke</h3></ion-col>
+			<ion-col col-8>
+				({{ index.pic_name }} - {{ index.company }})<br/>
+				{{ index.pic_phone }}<br/>
+				{{ index.address }}<br/>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<!-- <ion-col col-12><img [src]="'https://maps.googleapis.com/maps/api/staticmap?center='+index.latitude+','+index.longitude+'&zoom=15&size=600x300&maptype=roadmap&key='+this.env.gmap_api+'&markers=color:red%7Clabel:Location%7C'+index.latitude+','+index.longitude" style="width: 100%" /></ion-col> -->
+			<ion-col col-12><img [src]="'https://api.tomtom.com/map/1/staticimage?layer=basic&style=main&format=png&zoom=16&center='+index.longitude+','+index.latitude+'&width=1024&height=512&view=Unified&key='+this.env.tomtom_api" style="width: 100%" /></ion-col>
+		</ion-row>
+
+
+		<ion-row>
+			<ion-col col-4><h3>Keterangan</h3></ion-col>
+			<ion-col col-8>{{ index.note }}</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col col-12><h3>Barang</h3></ion-col>
+			<ion-col col-12 [innerHtml]="index.detail"></ion-col>
+		</ion-row>
+		
+	</ion-grid>
+</ion-content>
