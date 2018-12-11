@@ -9,11 +9,6 @@
 	<ion-navbar>
 		
 		<ion-buttons end>
-			
-			<button ion-button color="dark" (click)="create()">
-				Buat Baru
-			</button>
-
 			<button ion-button icon-only color="dark" (click)="filter()">
 				<ion-icon name="search"></ion-icon>
 			</button>
@@ -52,14 +47,17 @@
 
 				<div *ngFor="let list of index;" class="border-list">
 					<ion-row>
-						<ion-col col-12>
+						<ion-col col-8>
 							<p>
 								<ion-chip>
-									<ion-label>{{ list.type }}</ion-label>
+									<ion-label>{{ list.activity }}</ion-label>
 								</ion-chip>
 							</p>
 							<p>
 								<b>{{ list.company_name }}</b> - {{ list.brand_name }}
+							</p>
+							<p>
+								{{ this.util.datetimeFormat(list.datetime_activity) }}
 							</p>
 							<p>
 								Klien : {{ list.pic_fullname }}
@@ -72,7 +70,26 @@
 							
 							
 						</ion-col>
+						<ion-col col-4>
 
+							<div *ngIf="list.datetime_check_in == null && list.datetime_check_out == null && list.feedback_token == null">
+								<button ion-button small (click)="checkIn(list.id)">Check In</button>
+							</div>
+
+							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out == null && list.feedback_token == null">
+								<button ion-button small (click)="checkOut(list.id)">Check Out</button>
+							</div>
+
+							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token != null">
+								<button ion-button small (click)="sendFeedback(list.id, list.feedback_email)">Kirim Feedback</button>
+							</div>
+							<div *ngIf="list.datetime_check_in == null && list.datetime_check_out == null && list.feedback_token == null">
+								<button ion-button color="warning" small (click)="reschedule(list.id,list.activity,list.datetime_activity_iso)">Jadwal Ulang</button>
+							</div>
+							<div>
+								<button ion-button color="success" small (click)="next(list.crm_id)">Buat Acara</button>
+							</div>
+						</ion-col>
 					</ion-row>
 				</div>
 			</ion-col>

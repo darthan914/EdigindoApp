@@ -23,7 +23,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 @IonicPage({
 	name: 'delivery',
 	segment: 'delivery',
-	defaultHistory: ['home']
+	defaultHistory: ['home', 'courier']
 })
 @Component({
 	selector: 'page-waiting-delivery',

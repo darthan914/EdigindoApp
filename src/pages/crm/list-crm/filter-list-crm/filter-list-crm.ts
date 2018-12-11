@@ -25,17 +25,17 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		order : 'DESC',
 
  		f_company    : '',
+ 		f_activity  : '',
+ 		f_status   : 'NOT_FINISHED',
  		f_id     : '',
- 		s_company_prospec : '',
-
  	};
 
  	company:any;
  	activity:any;
-	status:any;
-	sort:any;
+ 	status:any;
+ 	sort:any;
 
-	headers:any;
+ 	headers:any;
 
  	constructor(
  		public viewCtrl  : ViewController,
@@ -46,63 +46,62 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		) {
 
  		this.headers = new Headers();
-		this.headers.append('Accept', 'application/json');
-        this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
-        
-		this.filterData = this.navParams.get('filterData');
+ 		this.headers.append('Accept', 'application/json');
+ 		this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+ 		
+ 		this.filterData = this.navParams.get('filterData');
  	}
 
  	ionViewWillLoad() {
-		this.getCollection();
-	}
+ 		this.getCollection();
+ 	}
 
-	close()
-	{
-		const returnData = {
-			status: 'CANCEL',
-		}
-		this.viewCtrl.dismiss(returnData);
-	}
+ 	close()
+ 	{
+ 		const returnData = {
+ 			status: 'CANCEL',
+ 		}
+ 		this.viewCtrl.dismiss(returnData);
+ 	}
 
-	apply()
-	{
-		const returnData = {
-			status: 'APPLY',
-			filterData : this.filterData
-		}
-		this.viewCtrl.dismiss(returnData);
-	}
+ 	apply()
+ 	{
+ 		const returnData = {
+ 			status: 'APPLY',
+ 			filterData : this.filterData
+ 		}
+ 		this.viewCtrl.dismiss(returnData);
+ 	}
 
-	reset()
-	{
-		const returnData = {
-			status: 'RESET',
-		}
-		this.viewCtrl.dismiss(returnData);
-	}
+ 	reset()
+ 	{
+ 		const returnData = {
+ 			status: 'RESET',
+ 		}
+ 		this.viewCtrl.dismiss(returnData);
+ 	}
 
  	getCollection()
-	{
-		let options = new RequestOptions({ headers: this.headers });
+ 	{
+ 		let options = new RequestOptions({ headers: this.headers });
 
-		let data = {
-		};
+ 		let data = {
+ 		};
 
-		this.http.post(this.env.base_url+"api/crm/collection", data, options)
-			.subscribe(
-				data => { 
-					if(data.json().status == "OK")
-					{
-						this.company = data.json().data.company;
-						this.activity = data.json().data.activity;
-						this.status = data.json().data.status2;
-						this.sort = data.json().data.sort_crm;
-					}
-				},
-				error => { 
-					this.util.presentToast('Server Error! try logout and login again!');
-				}
-			);
-	}
-
+ 		this.http.post(this.env.base_url+"api/crm/collection", data, options)
+ 		.subscribe(
+ 			data => { 
+ 				if(data.json().status == "OK")
+ 				{
+ 					this.company = data.json().data.company;
+ 					this.activity = data.json().data.activity;
+ 					this.status = data.json().data.status2;
+ 					this.sort = data.json().data.sort_crm_detail;
+ 				}
+ 			},
+ 			error => { 
+ 				this.util.presentToast('Server Error! try logout and login again!');
+ 			}
+ 			);
+ 	}
  }

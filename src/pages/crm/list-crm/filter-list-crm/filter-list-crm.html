@@ -21,17 +21,28 @@
 
 <ion-content padding>
 	<ion-list>
-
-		<ion-item>
-			<ion-label>Perusahaan Prospec</ion-label>
-			<ion-input type="text" placeholder="Cari" clearInput [(ngModel)]="filterData.s_company_prospec"></ion-input>
-		</ion-item>
-
 		<ion-item>
 			<ion-label>Perusahaan</ion-label>
 			<ion-select [(ngModel)]="filterData.f_company" interface="popover">
 				<ion-option value="">Semua Perusahaan</ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+
+		<ion-item>
+			<ion-label>Aktifitas</ion-label>
+			<ion-select [(ngModel)]="filterData.f_activity" interface="popover">
+				<ion-option value="">Semua Aktifitas</ion-option>
+				<ion-option *ngFor="let list of activity" [value]="list.value">{{list.name}}</ion-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item>
+			<ion-label>Status</ion-label>
+			<ion-select [(ngModel)]="filterData.f_status" interface="popover">
+				<ion-option value="">Semua Status</ion-option>
+				<ion-option *ngFor="let list of status" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
 

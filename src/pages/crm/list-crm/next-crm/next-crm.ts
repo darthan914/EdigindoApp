@@ -49,6 +49,8 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		this.headers = new Headers();
  		this.headers.append('Accept', 'application/json');
  		this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+
+ 		this.inputData.crm_id = this.navParams.get('crm_id');
  	}
 
  	ionViewWillLoad() {

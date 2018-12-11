@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ModalController, AlertController  } from 'ionic-angular';
+import { IonicPage, NavParams, ModalController, AlertController, NavController  } from 'ionic-angular';
 
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -84,6 +84,7 @@ export class TakenDeliveryPage {
 		public auth			: AuthenticationProvider,
 		private geolocation : Geolocation,
 		private alertCtrl   : AlertController,
+		public navCtrl : NavController,
 		)
 	{
 		this.headers = new Headers();
@@ -499,5 +500,9 @@ export class TakenDeliveryPage {
 				this.util.presentToast('Server Error! try logout and login again!');
 			}
 			);
+	}
+
+	getWaitingDelivery(){
+		this.navCtrl.push('delivery');
 	}
 }

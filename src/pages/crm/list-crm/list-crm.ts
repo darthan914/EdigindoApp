@@ -6,6 +6,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
+import { Geolocation } from '@ionic-native/geolocation';
 
 /**
  * Generated class for the ListCrmPage page.
@@ -39,23 +40,25 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 
  	filterData:any = {
  		limit : 30,
- 		sort  : 'crm.id',
+ 		sort  : 'crm_detail.id',
  		order : 'DESC',
 
  		f_company    : '',
+ 		f_activity  : '',
+ 		f_status   : 'NOT_FINISHED',
  		f_id     : '',
- 		s_company_prospec     : '',
 
  	};
 
  	filterInit:any = {
  		limit : 30,
- 		sort  : 'crm.id',
+ 		sort  : 'crm_detail.id',
  		order : 'DESC',
 
  		f_company    : '',
+ 		f_activity  : '',
+ 		f_status   : 'NOT_FINISHED',
  		f_id     : '',
- 		s_company_prospec     : '',
  	}
 
  	headers:any;
@@ -69,6 +72,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
  		public env       : EnviromentProvider,
  		public util      : UtilityProvider,
  		public auth      : AuthenticationProvider,
+ 		private geolocation : Geolocation,
  		) {
  		this.headers = new Headers();
  		this.headers.append('Accept', 'application/json');
@@ -85,8 +89,9 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 
  		let data = {
  			f_company  : this.filterData.f_company,
+ 			f_activity : this.filterData.f_activity,
+ 			f_status   : this.filterData.f_status,
  			f_id       : this.filterData.f_id,
- 			s_company_prospec: this.filterData.s_company_prospec,
 
  			limit : this.filterData.limit,
  			sort  : this.filterData.sort,
@@ -95,7 +100,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
  			page : this.paginateData.page,
  		}
  		
- 		this.http.post(this.env.base_url+"api/crm", data, options)
+ 		this.http.post(this.env.base_url+"api/crm/schedule", data, options)
  		.subscribe(
  			res => { 
  				if(res.json().status == "OK")
@@ -147,8 +152,9 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
 
  		let data = {
  			f_company  : this.filterData.f_company,
+ 			f_activity : this.filterData.f_activity,
+ 			f_status   : this.filterData.f_status,
  			f_id       : this.filterData.f_id,
- 			s_company_prospec: this.filterData.s_company_prospec,
 
  			limit : this.filterData.limit,
  			sort  : this.filterData.sort,
@@ -158,7 +164,7 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
  		}
 
  		this.util.showLoader('Loading...');
- 		this.http.post(this.env.base_url+"api/crm", data, options)
+ 		this.http.post(this.env.base_url+"api/crm/schedule", data, options)
  		.subscribe(
  			res => {
  				if(res.json().status == "OK")
@@ -268,21 +274,150 @@ import { AuthenticationProvider } from '../../../providers/authentication/authen
  	}
 
 
- 	create()
+ 	next(crm_id)
  	{
- 		const modal = this.modalCtrl.create('CreateCrmPage');
+ 		const passingData = {
+ 			crm_id : crm_id,
+ 		}
+
+ 		const modal = this.modalCtrl.create('NextCrmPage', passingData);
 
  		modal.present();
 
  		modal.onWillDismiss((res) => {
  			if(res)
  			{
- 				if(res.status == 'APPLY')
+	 			if(res.status == 'APPLY')
 	 			{
 	 				this.load();
 	 			}
- 			}
- 			
+	 		}
  		})
  	}
+
+ 	reschedule(id, activity, datetime_activity)
+ 	{
+ 		const passingData = {
+ 			id : id,
+ 			activity : activity,
+ 			datetime_activity : datetime_activity,
+ 		}
+
+ 		const modal = this.modalCtrl.create('RescheduleCrmPage', passingData);
+
+ 		modal.present();
+
+ 		modal.onWillDismiss((res) => {
+ 			if(res)
+ 			{
+	 			if(res.status == 'APPLY')
+	 			{
+	 				this.load();
+	 			}
+	 		}
+ 		})
+ 	}
+
+ 	checkIn(id)
+ 	{
+ 		var latitude  = 0;
+ 		var longitude = 0;
+
+ 		this.geolocation.getCurrentPosition().then((resp) => {
+ 			latitude  = resp.coords.latitude;
+ 			longitude = resp.coords.longitude;
+
+ 			let options = new RequestOptions({ headers: this.headers });
+
+ 			let data = {
+ 				id                 : id,
+ 				latitude_check_in  : latitude,
+ 				longitude_check_in : longitude,
+ 			}
+
+ 			this.util.showLoader('Loading...');
+ 			this.http.post(this.env.base_url+"api/crm/checkIn", data, options)
+ 			.subscribe(
+ 				data => {
+ 					this.util.loading.dismiss();
+ 					this.util.presentToast(data.json().message);
+
+ 					if(data.json().status == "OK")
+ 					{
+
+ 						this.load();
+ 					}
+ 				},
+ 				error => { 
+ 					this.util.loading.dismiss();
+ 					this.util.presentToast('Server Error! try logout and login again!');
+ 				}
+ 				);
+ 		}).catch((error) => {
+ 			this.util.presentToast('Error! please allow access location to complete task!');
+ 		});
+ 	}
+
+ 	checkOut(id)
+ 	{
+ 		var latitude  = 0;
+ 		var longitude = 0;
+
+ 		this.geolocation.getCurrentPosition().then((resp) => {
+ 			latitude  = resp.coords.latitude;
+ 			longitude = resp.coords.longitude;
+
+ 			let options = new RequestOptions({ headers: this.headers });
+
+ 			let data = {
+ 				id                  : id,
+ 				latitude_check_out  : latitude,
+ 				longitude_check_out : longitude,
+ 			}
+
+ 			this.util.showLoader('Loading...');
+ 			this.http.post(this.env.base_url+"api/crm/checkOut", data, options)
+ 			.subscribe(
+ 				data => {
+ 					this.util.loading.dismiss();
+ 					this.util.presentToast(data.json().message);
+
+ 					if(data.json().status == "OK")
+ 					{
+
+ 						this.load();
+ 					}
+ 				},
+ 				error => { 
+ 					this.util.loading.dismiss();
+ 					this.util.presentToast('Server Error! try logout and login again!');
+ 				}
+ 				);
+ 		}).catch((error) => {
+ 			this.util.presentToast('Error! please allow access location to complete task!');
+ 		});
+ 	}
+
+ 	sendFeedback(id, feedback_email)
+ 	{
+ 		const passingData = {
+ 			id : id,
+ 			feedback_email : feedback_email,
+ 		}
+
+ 		const modal = this.modalCtrl.create('SendFeedbackCrmPage', passingData);
+
+ 		modal.present();
+
+ 		modal.onWillDismiss((res) => {
+ 			if(res)
+ 			{
+	 			if(res.status == 'APPLY')
+	 			{
+	 				this.load();
+	 			}
+	 		}
+ 		})
+ 	}
+
  }

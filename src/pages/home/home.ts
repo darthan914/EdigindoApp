@@ -74,16 +74,15 @@ export class HomePage {
 				'group_name' : 'CRM',
 				'access'     : 'list-crm',
 				'content'    : [
-					{'page' : 'list-crm', 'name' : 'Daftar Klien', 'access' : 'list-crm'},
-					{'page' : 'list-crm-detail', 'name' : 'Jadwal Klien', 'access' : 'list-crm'},
+					{'page' : 'create-crm', 'name' : 'Buat CRM', 'access' : 'create-crm'},
+					{'page' : 'list-crm', 'name' : 'Daftar CRM', 'access' : 'list-crm'},
 				]
 			},
 			{
 				'group_name' : 'Pengiriman',
 				'access'     : 'list-delivery',
 				'content'    : [
-					{'page' : 'delivery', 'name' : 'Daftar Pengiriman', 'access' : 'list-delivery'},
-					{'page' : 'courier', 'name' : 'Tugas Pengiriman', 'access' : 'courier-delivery'}
+					{'page' : 'courier', 'name' : 'Daftar Pengiriman', 'access' : 'courier-delivery'}
 				]
 			}
 			

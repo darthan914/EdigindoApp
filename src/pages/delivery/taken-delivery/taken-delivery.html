@@ -30,6 +30,9 @@
 			refreshingText="Refreshing..."
 		></ion-refresher-content>
 	</ion-refresher>
+	<div>
+		<button ion-button color="primary" full (click)="getWaitingDelivery()">Ambil Daftar Pengiriman</button>
+	</div>
 	<ion-grid *ngIf="paginateData.total > 0">
 		<ion-row>
 			<ion-col col-sm-4 col-3>

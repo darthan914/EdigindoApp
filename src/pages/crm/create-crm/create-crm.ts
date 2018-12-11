@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavParams, NavController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { UtilityProvider } from '../../../../providers/utility/utility';
-import { EnviromentProvider } from '../../../../providers/enviroment/enviroment';
+import { UtilityProvider } from '../../../providers/utility/utility';
+import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 
 /**
  * Generated class for the CreateCrmPage page.
@@ -12,7 +12,11 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  * Ionic pages and navigation.
  */
 
- @IonicPage()
+ @IonicPage({
+ 	name: 'create-crm',
+ 	segment: 'create-crm',
+ 	defaultHistory: ['home']
+ })
  @Component({
  	selector: 'page-create-crm',
  	templateUrl: 'create-crm.html',
@@ -87,7 +91,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
  	headers:any;
 
- 	constructor(public viewCtrl  : ViewController,
+ 	constructor(public navCtrl  : NavController,
  		public navParams : NavParams,
  		public env       : EnviromentProvider,
  		public http      : Http, 
@@ -112,15 +116,6 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  	{
  		this.step = n;
  	}
-
- 	close()
-	{
-		const returnData = {
-			status: 'CANCEL',
-		}
-
-		this.viewCtrl.dismiss(returnData);
-	}
 
  	checkValidation(current:number)
  	{
@@ -157,7 +152,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 			case 1:
 				if(this.inputData.company_id != '' && this.inputData.pic_id != '')
 	 			{
-					this.setStep(10);
+					this.setStep(6);
 	 			}
 	 			else
 	 			{
@@ -246,10 +241,6 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 				 		time_activity : this.inputData.time_activity,
 					};
 
-					const returnData = {
-						status: 'APPLY',
-					}
-
 					this.util.showLoader('Loading...');
 					this.http.post(this.env.base_url+"api/crm/create", data, options)
 						.subscribe(
@@ -258,7 +249,8 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 								{
 									this.util.presentToast(data.json().message);
 									this.util.loading.dismiss();
-									this.viewCtrl.dismiss(returnData);
+									this.navCtrl.pop();
+									this.navCtrl.push('list-crm');
 								}
 								else
 								{
@@ -269,7 +261,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 							error => { 
 								this.util.presentToast('Server Error! try logout and login again!');
 								this.util.loading.dismiss();
-								this.viewCtrl.dismiss(returnData);
+								this.navCtrl.pop();
 							}
 						);
 	 			}
@@ -303,7 +295,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
 		switch (current) {
 			case 0:
-				this.viewCtrl.dismiss();
+				this.navCtrl.pop();
 				break;
 
 			case 1:
@@ -446,6 +438,18 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 					this.util.presentToast('Server Error! try logout and login again!');
 				}
 			);
+	}
+
+	emailValidator(value:string)
+	{
+		let re = /^[a-zA-Z0-9._]+[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        let result = re.test(value);
+        
+        if (!result) {
+        	return false
+        }
+        
+        return true;
 	}
 
  }
