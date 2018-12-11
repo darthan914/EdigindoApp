@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { UtilityProvider } from '../../../providers/utility/utility';
-import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
+import { UtilityProvider } from '../../../../providers/utility/utility';
+import { EnviromentProvider } from '../../../../providers/enviroment/enviroment';
 
 /**
- * Generated class for the FilterCrmPage page.
+ * Generated class for the FilterListCrmPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -14,10 +14,10 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 
  @IonicPage()
  @Component({
- 	selector: 'page-filter-crm',
- 	templateUrl: 'filter-crm.html',
+ 	selector: 'page-filter-list-crm',
+ 	templateUrl: 'filter-list-crm.html',
  })
- export class FilterCrmPage {
+ export class FilterListCrmPage {
 
  	filterData:any = {
  		limit : 30,
@@ -25,9 +25,8 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
  		order : 'DESC',
 
  		f_company    : '',
- 		f_activity  : '',
- 		f_status   : 'NOT_FINISHED',
  		f_id     : '',
+ 		s_company_prospec : '',
 
  	};
 
@@ -97,7 +96,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 						this.company = data.json().data.company;
 						this.activity = data.json().data.activity;
 						this.status = data.json().data.status2;
-						this.sort = data.json().data.sort;
+						this.sort = data.json().data.sort_crm;
 					}
 				},
 				error => { 

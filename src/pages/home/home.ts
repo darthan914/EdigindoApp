@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App, Platform} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
 
 import { Http } from '@angular/http';
 
@@ -7,7 +7,7 @@ import { AuthenticationProvider } from '../../providers/authentication/authentic
 import { UtilityProvider } from '../../providers/utility/utility';
 import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 
-// import { PusherProvider } from '../../providers/pusher/pusher';
+import { PusherProvider } from '../../providers/pusher/pusher';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 /**
@@ -36,8 +36,8 @@ export class HomePage {
 		public env                 : EnviromentProvider,
 		public auth                : AuthenticationProvider,
 		private localNotifications : LocalNotifications,
-		private plaform            : Platform,
-		// private pusher             : PusherProvider,
+		// private plaform            : Platform,
+		private pusher             : PusherProvider,
 	)
 	{
 		if(localStorage.getItem("token") == null) {
@@ -45,9 +45,18 @@ export class HomePage {
 		}
 		else
 		{
-			// this.pusher.init().bind('my-event', function(data) {
-			//   console.log('An event was triggered with message: ' + data.message);
-			// });
+			var notif = this.localNotifications;
+
+			this.pusher.init().bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
+				notif.schedule({
+					title : data.from,
+					text: data.messages,
+					data: {
+				        app_slug : data.app_slug
+				    }
+				});
+				// console.log(data.messages);
+			});
 		}
 	}
 
@@ -65,7 +74,8 @@ export class HomePage {
 				'group_name' : 'CRM',
 				'access'     : 'list-crm',
 				'content'    : [
-					{'page' : 'crm', 'name' : 'List CRM', 'access' : 'list-crm'},
+					{'page' : 'list-crm', 'name' : 'Daftar Klien', 'access' : 'list-crm'},
+					{'page' : 'list-crm-detail', 'name' : 'Jadwal Klien', 'access' : 'list-crm'},
 				]
 			},
 			{
@@ -128,6 +138,7 @@ export class HomePage {
 
 	onLogout() {
 		this.util.showLoader('Logout...');
+		this.pusher.unsubscribed();
 		this.auth.logout().then((result) => {
 			this.util.loading.dismiss();
 			this.navCtrl.setRoot('login');

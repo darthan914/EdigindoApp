@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { FilterCrmPage } from './filter-crm';
+import { ListCrmPage } from './list-crm';
 
 @NgModule({
   declarations: [
-    FilterCrmPage,
+    ListCrmPage,
   ],
   imports: [
-    IonicPageModule.forChild(FilterCrmPage),
+    IonicPageModule.forChild(ListCrmPage),
   ],
 })
-export class FilterCrmPageModule {}
+export class ListCrmPageModule {}

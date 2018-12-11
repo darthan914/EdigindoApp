@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController, LoadingController, ToastController} from 'ionic-angular';
+import { IonicPage, NavController, AlertController, LoadingController, ToastController, Platform} from 'ionic-angular';
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UtilityProvider } from '../../providers/utility/utility';
+
+
+// import { PusherProvider } from '../../providers/pusher/pusher';
+// import { LocalNotifications } from '@ionic-native/local-notifications';
 
 // import { HomePage } from '../home/home';
 // import { DeliveryPage } from '../delivery/delivery';
@@ -25,6 +29,10 @@ export class LoginPage {
 		public toastCtrl   : ToastController,
 		public auth        : AuthenticationProvider,
 		public util        : UtilityProvider,
+		platform       : Platform,
+
+
+
 		) {
 		if(localStorage.getItem("token")) {
 			this.navCtrl.setRoot('home');
@@ -74,7 +82,6 @@ export class LoginPage {
 			this.util.presentToast('Server Not Found!');
 		});
 	}
-
 
 	
 }

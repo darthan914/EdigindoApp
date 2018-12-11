@@ -1,25 +1,36 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Pusher from 'pusher-js';
+import { EnviromentProvider } from '../../providers/enviroment/enviroment';
 
 @Injectable()
 export class PusherProvider {
 	channel;
 	
-	constructor(public http: HttpClient) {
-		const pusher = new Pusher('1f7e56e80c089e2d8f69', {
-			// authEndpoint: 'http://127.0.0.1/edigindo/broadcasting/auth',
-		    // key: '1f7e56e80c089e2d8f69',
+	constructor(public http: HttpClient, public env : EnviromentProvider,) {
+
+		const pusher = new Pusher(this.env.pusher_key, {
+			authEndpoint: this.env.base_url + 'api/broadcasting/auth?api_token=' + localStorage.getItem('token'),
+		    key: this.env.pusher_key,
 		    cluster : 'ap1',
 		    encrypted: true,
 		    auth: {
 		    	headers: { 'Authorization': 'Bearer '+ localStorage.getItem('token') }
 		    }
 		});
-		this.channel = pusher.subscribe('private-App.User.1');
+		if(localStorage.getItem('user'))
+		{
+
+			this.channel = pusher.subscribe('private-App.User.' + JSON.parse(localStorage.getItem('user')).id );
+		}
 	}
 	
 	public init() {
 		return this.channel;
+	}
+
+	public unsubscribed()
+	{
+		this.channel.unsubscribe('private-App.User.' + JSON.parse(localStorage.getItem('user')).id );
 	}
 }

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { UtilityProvider } from '../../../providers/utility/utility';
-import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
+import { UtilityProvider } from '../../../../providers/utility/utility';
+import { EnviromentProvider } from '../../../../providers/enviroment/enviroment';
 
 /**
  * Generated class for the RescheduleCrmPage page.
@@ -92,12 +92,14 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 			status: 'APPLY',
 		}
 
+		this.util.showLoader('Loading...');
 		this.http.post(this.env.base_url+"api/crm/reschedule", data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
 					{
 						this.util.presentToast(data.json().message);
+						this.util.loading.dismiss();
 						this.viewCtrl.dismiss(returnData);
 					}
 					else
@@ -110,6 +112,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 				},
 				error => { 
 					this.util.presentToast('Server Error! try logout and login again!');
+					this.util.loading.dismiss();
 					this.viewCtrl.dismiss(returnData);
 				}
 			);

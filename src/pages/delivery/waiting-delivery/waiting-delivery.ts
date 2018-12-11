@@ -251,10 +251,7 @@ export class WaitingDeliveryPage {
 		modal.present();
 
 		modal.onWillDismiss((res) => {
-			if(res.status == 'TAKE')
-			{
-				
-			}
+
 		})
 	}
 
@@ -269,17 +266,20 @@ export class WaitingDeliveryPage {
 		modal.present();
 
 		modal.onWillDismiss((res) => {
-			if(res.status == 'APPLY')
-			{
-				this.filterData        = res.filterData;
-				this.paginateData.page = 1;
-			    this.load();
-			}
-			else if(res.status == 'RESET')
-			{
-				this.filterData        = this.filterInit;
-				this.paginateData.page = 1;
-			    this.load();
+			if(res)
+ 			{
+				if(res.status == 'APPLY')
+				{
+					this.filterData        = res.filterData;
+					this.paginateData.page = 1;
+				    this.load();
+				}
+				else if(res.status == 'RESET')
+				{
+					this.filterData        = this.filterInit;
+					this.paginateData.page = 1;
+				    this.load();
+				}
 			}
 		})
 	}
@@ -307,10 +307,13 @@ export class WaitingDeliveryPage {
 		modal.present();
 
 		modal.onWillDismiss((res) => {
-			if(res.status == 'APPLY')
-			{
-				this.paginateData.page = res.data.page;
-			    this.load();
+			if(res)
+ 			{
+				if(res.status == 'APPLY')
+				{
+					this.paginateData.page = res.data.page;
+				    this.load();
+				}
 			}
 		})
 	}

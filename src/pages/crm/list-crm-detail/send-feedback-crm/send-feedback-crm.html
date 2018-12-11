@@ -1,0 +1,45 @@
+<!--
+  Generated template for the NextCrmPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+		<ion-title>Send Feedback</ion-title>
+		<ion-buttons end>
+			<button ion-button icon-only color="danger" (click)="this.close()">
+				<ion-icon name="close"></ion-icon>
+			</button>
+		</ion-buttons>
+	</ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list>
+
+		<ion-item>
+			<ion-label stacked>Email</ion-label>
+			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.feedback_email"></ion-input>
+
+		</ion-item>
+		
+		<p color="danger">{{ errorData.feedback_email }}</p>
+
+		<ion-item>
+			<ion-grid>
+				<ion-row>
+					<ion-col col-6>
+						<button ion-button color="success" full (click)="this.apply()">Kirim</button>
+					</ion-col>
+					<ion-col col-6>
+						<button ion-button color="light" full (click)="this.close()">Batal</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>
+	</ion-list>
+</ion-content>

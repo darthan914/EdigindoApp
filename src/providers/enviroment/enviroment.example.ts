@@ -17,6 +17,8 @@ export class EnviromentProvider {
 	public tomtom_api:string ="";
 	public client_secret:string = "";
 	public client_id:number = 0;
+	public pusher_key:string = "";
+	public pusher_secret:string = "";
 
 	constructor(public http: HttpClient) {
 	    // console.log('Hello EnviromentProvider Provider');

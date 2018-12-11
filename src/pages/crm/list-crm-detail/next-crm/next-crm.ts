@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { UtilityProvider } from '../../../providers/utility/utility';
-import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
+import { UtilityProvider } from '../../../../providers/utility/utility';
+import { EnviromentProvider } from '../../../../providers/enviroment/enviroment';
 
 /**
  * Generated class for the NextCrmPage page.
@@ -74,25 +74,26 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 		let options = new RequestOptions({ headers: this.headers });
 
 		var date = new Date(this.inputData.date_activity);
-		var time = new Date(this.inputData.time_activity);
 
 		let data = {
 			crm_id        : this.inputData.crm_id,
 	 		activity      : this.inputData.activity,
 	 		date_activity : this.util.datePHPFormat(date),
-	 		time_activity : this.util.timeFormat(time),
+	 		time_activity : this.inputData.time_activity,
 		};
 
 		const returnData = {
 			status: 'APPLY',
 		}
 
+		this.util.showLoader('Loading...');
 		this.http.post(this.env.base_url+"api/crm/next", data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
 					{
 						this.util.presentToast(data.json().message);
+						this.util.loading.dismiss();
 						this.viewCtrl.dismiss(returnData);
 					}
 					else
@@ -101,11 +102,13 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 				 		this.errorData.activity = data.json().error.activity !== undefined? data.json().error.activity[0] : ''
 				 		this.errorData.date_activity = data.json().error.date_activity !== undefined ? data.json().error.date_activity[0] : ''
 				 		this.errorData.time_activity = data.json().error.time_activity !== undefined ? data.json().error.time_activity[0] : ''
+						this.util.loading.dismiss();
 						this.util.presentToast(data.json().message);
 					}
 				},
 				error => { 
 					this.util.presentToast('Server Error! try logout and login again!');
+					this.util.loading.dismiss();
 					this.viewCtrl.dismiss(returnData);
 				}
 			);
