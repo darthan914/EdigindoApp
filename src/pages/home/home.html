@@ -54,8 +54,28 @@
 				</ion-row>
 			</ion-grid>
 		</div>
+
+
+		
 		
 	</ion-list>
+	
+	<ion-list>
+		<div *ngIf="this.auth.hasAccess('beta')">
+			<h3>Test</h3>
+			<ion-grid>
+				<ion-row>
+					<ion-col col-12 col-sm-6 col-md-3>
+						<button ion-button color="light" full (click)="testNotif()">Test Notification</button>
+					</ion-col>
+					<ion-col col-12 col-sm-6 col-md-3>
+						<button ion-button color="light" full (click)="testNotifDelay(1)">Test Notification Delay 1 Minutes</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</div>
+	</ion-list>
+
 	<ion-list>
 		<ion-grid>
 			<ion-row>
@@ -63,7 +83,7 @@
 					<button ion-button color="primary" full (click)="testNotif()">Trigger Notification</button>
 				</ion-col> -->
 				<ion-col>
-					<button ion-button color="danger" full (click)="onLogout()">Keluar</button>
+					<button ion-button color="danger" full (click)="onLogout()">Logout</button>
 				</ion-col>
 			</ion-row>
 		</ion-grid>

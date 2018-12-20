@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Delivery Taken Filter</ion-title>
+    <ion-title>Delivery Filter</ion-title>
     <ion-buttons end>
 			<button ion-button icon-only color="danger" (click)="this.close()">
 				<ion-icon name="close"></ion-icon>
@@ -21,17 +21,17 @@
 <ion-content padding>
 	<ion-list>
 		<ion-item>
-			<ion-input placeholder="Cari SPK" clearInput [(ngModel)]="filterData.s_spk"></ion-input>
+			<ion-input placeholder="Search SPK" clearInput [(ngModel)]="filterData.s_spk"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-input placeholder="Cari Proyek" clearInput [(ngModel)]="filterData.s_project"></ion-input>
+			<ion-input placeholder="Search Project" clearInput [(ngModel)]="filterData.s_project"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Waktu</ion-label>
+			<ion-label>When</ion-label>
 			<ion-select [(ngModel)]="filterData.f_when" interface="popover">
-				<ion-option value="">Semua Waktu</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of when" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -39,7 +39,7 @@
 		<ion-item>
 			<ion-label>Status</ion-label>
 			<ion-select [(ngModel)]="filterData.f_status" interface="popover">
-				<ion-option value="">Semua Status</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of status" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -55,8 +55,8 @@
 				<ion-option *ngFor="let list of sort" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 			<ion-select [(ngModel)]="filterData.order" interface="popover">
-				<ion-option value="ASC">Menaik</ion-option>
-				<ion-option value="DESC">Menurun</ion-option>
+				<ion-option value="ASC">Ascending</ion-option>
+				<ion-option value="DESC">Descending</ion-option>
 			</ion-select>
 		</ion-item>
 

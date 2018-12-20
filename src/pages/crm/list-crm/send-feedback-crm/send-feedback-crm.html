@@ -24,19 +24,27 @@
 		<ion-item>
 			<ion-label stacked>Email</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.feedback_email"></ion-input>
+			<p color="danger">{{ errorData.feedback_email }}</p>
+
+		</ion-item>
+
+		<ion-item>
+			<ion-label stacked>Phone</ion-label>
+			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.feedback_phone"></ion-input>
+			<p color="danger">{{ errorData.feedback_phone }}</p>
 
 		</ion-item>
 		
-		<p color="danger">{{ errorData.feedback_email }}</p>
+		
 
 		<ion-item>
 			<ion-grid>
 				<ion-row>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="this.apply()">Kirim</button>
+						<button ion-button color="success" full (click)="this.apply()">Send</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="light" full (click)="this.close()">Batal</button>
+						<button ion-button color="light" full (click)="this.close()">Cancel</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>

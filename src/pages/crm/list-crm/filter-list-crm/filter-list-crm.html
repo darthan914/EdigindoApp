@@ -22,18 +22,18 @@
 <ion-content padding>
 	<ion-list>
 		<ion-item>
-			<ion-label>Perusahaan</ion-label>
+			<ion-label>Company</ion-label>
 			<ion-select [(ngModel)]="filterData.f_company" interface="popover">
-				<ion-option value="">Semua Perusahaan</ion-option>
+				<ion-option value="">All Company</ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 
 		<ion-item>
-			<ion-label>Aktifitas</ion-label>
+			<ion-label>Activity</ion-label>
 			<ion-select [(ngModel)]="filterData.f_activity" interface="popover">
-				<ion-option value="">Semua Aktifitas</ion-option>
+				<ion-option value="">All Activity</ion-option>
 				<ion-option *ngFor="let list of activity" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -41,7 +41,7 @@
 		<ion-item>
 			<ion-label>Status</ion-label>
 			<ion-select [(ngModel)]="filterData.f_status" interface="popover">
-				<ion-option value="">Semua Status</ion-option>
+				<ion-option value="">All Status</ion-option>
 				<ion-option *ngFor="let list of status" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -57,8 +57,8 @@
 				<ion-option *ngFor="let list of sort" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 			<ion-select [(ngModel)]="filterData.order" interface="popover">
-				<ion-option value="ASC">Menaik</ion-option>
-				<ion-option value="DESC">Menurun</ion-option>
+				<ion-option value="ASC">Ascending</ion-option>
+				<ion-option value="DESC">Descending</ion-option>
 			</ion-select>
 		</ion-item>
 

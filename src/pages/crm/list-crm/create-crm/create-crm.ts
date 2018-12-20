@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavParams, NavController } from 'ionic-angular';
+import { IonicPage, NavParams, ViewController } from 'ionic-angular';
 
 import { Http, Headers, RequestOptions } from '@angular/http';
-import { UtilityProvider } from '../../../providers/utility/utility';
-import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
+import { UtilityProvider } from '../../../../providers/utility/utility';
+import { EnviromentProvider } from '../../../../providers/enviroment/enviroment';
 
 /**
  * Generated class for the CreateCrmPage page.
@@ -12,11 +12,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
  * Ionic pages and navigation.
  */
 
- @IonicPage({
- 	name: 'create-crm',
- 	segment: 'create-crm',
- 	defaultHistory: ['home']
- })
+ @IonicPage()
  @Component({
  	selector: 'page-create-crm',
  	templateUrl: 'create-crm.html',
@@ -91,7 +87,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 
  	headers:any;
 
- 	constructor(public navCtrl  : NavController,
+ 	constructor(public viewCtrl  : ViewController,
  		public navParams : NavParams,
  		public env       : EnviromentProvider,
  		public http      : Http, 
@@ -139,13 +135,13 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			{
 					this.setStep(1);
 	 			}
-	 			else if(this.inputData.type == 'PROSPEC')
+	 			else if(this.inputData.type == 'PROSPEC' || this.inputData.type == 'PROSPECT')
 	 			{
 	 				this.setStep(2);
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('Pilih tipe!');
+	 				this.util.presentToast('Select Type!');
 	 			}
 				break;
 
@@ -156,7 +152,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('Perusahaan dan PIC tidak boleh kosong!');
+	 				this.util.presentToast('Company and PIC required!');
 	 			}
 
 				break;
@@ -168,7 +164,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('Perusahaan tidak boleh kosong!');
+	 				this.util.presentToast('Company Required!');
 	 			}
 				break;
 
@@ -179,7 +175,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('Nama perusahaan tidak boleh kosong!');
+	 				this.util.presentToast('Name Company Required!');
 	 			}
 
 				break;
@@ -191,7 +187,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('PIC tidak boleh kosong!');
+	 				this.util.presentToast('PIC Required!');
 	 			}
 
 				break;
@@ -203,7 +199,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('PIC nama, jenis kelamin, handphone dan email tidak boleh kosong!');
+	 				this.util.presentToast('Fullname, gender, handphone dan email Required!');
 	 			}
 
 				break;
@@ -249,8 +245,10 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 								{
 									this.util.presentToast(data.json().message);
 									this.util.loading.dismiss();
-									this.navCtrl.pop();
-									this.navCtrl.push('list-crm');
+									const returnData = {
+							 			status: 'APPLY',
+							 		}
+							 		this.viewCtrl.dismiss(returnData);
 								}
 								else
 								{
@@ -261,13 +259,13 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 							error => { 
 								this.util.presentToast('Server Error! try logout and login again!');
 								this.util.loading.dismiss();
-								this.navCtrl.pop();
+						 		this.viewCtrl.dismiss();
 							}
 						);
 	 			}
 	 			else
 	 			{
-	 				this.util.presentToast('Aktifitas tidak boleh kosong!');
+	 				this.util.presentToast('Activity Required!');
 	 			}
 
 				break;
@@ -295,7 +293,7 @@ import { EnviromentProvider } from '../../../providers/enviroment/enviroment';
 
 		switch (current) {
 			case 0:
-				this.navCtrl.pop();
+		 		this.viewCtrl.dismiss();
 				break;
 
 			case 1:

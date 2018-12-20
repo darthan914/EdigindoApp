@@ -22,10 +22,12 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  	inputData:any = {
  		id : '',
  		feedback_email : '',
+ 		feedback_phone : '',
  	};
 
  	errorData:any = {
  		feedback_email : '',
+ 		feedback_phone : '',
  	};
 
  	headers:any;
@@ -42,6 +44,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
  		this.inputData.id = this.navParams.get('id');
  		this.inputData.feedback_email = this.navParams.get('feedback_email');
+ 		this.inputData.feedback_phone = this.navParams.get('feedback_phone');
  	}
 
  	ionViewWillLoad() {
@@ -82,6 +85,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 					else
 					{
 				 		this.errorData.feedback_email = data.json().error.feedback_email !== undefined? data.json().error.feedback_email[0] : ''
+				 		this.errorData.feedback_phone = data.json().error.feedback_phone !== undefined? data.json().error.feedback_phone[0] : ''
 						this.util.loading.dismiss();
 						this.util.presentToast(data.json().message);
 					}

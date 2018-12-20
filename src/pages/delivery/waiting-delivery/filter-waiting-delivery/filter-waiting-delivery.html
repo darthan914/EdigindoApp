@@ -21,25 +21,25 @@
 <ion-content padding>
 	<ion-list>
 		<ion-item>
-			<ion-input placeholder="Cari SPK" clearInput [(ngModel)]="filterData.s_spk"></ion-input>
+			<ion-input placeholder="Search SPK" clearInput [(ngModel)]="filterData.s_spk"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-input placeholder="Cari Proyek" clearInput [(ngModel)]="filterData.s_project"></ion-input>
+			<ion-input placeholder="Search Project" clearInput [(ngModel)]="filterData.s_project"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Jalur</ion-label>
+			<ion-label>Via</ion-label>
 			<ion-select [(ngModel)]="filterData.f_via" interface="popover">
-				<ion-option value="">Semua Jalur</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of via" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Waktu</ion-label>
+			<ion-label>When</ion-label>
 			<ion-select [(ngModel)]="filterData.f_when" interface="popover">
-				<ion-option value="">Semua Waktu</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of when" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -47,7 +47,7 @@
 		<ion-item>
 			<ion-label>Status</ion-label>
 			<ion-select [(ngModel)]="filterData.f_status" interface="popover">
-				<ion-option value="">Semua Status</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of status" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -55,33 +55,33 @@
 		<ion-item>
 			<ion-label>User</ion-label>
 			<ion-select [(ngModel)]="filterData.f_user" interface="popover">
-				<ion-option value="">Semua User</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option value="staff">Anak Buah</ion-option>
 				<ion-option *ngFor="let list of user" [value]="list.id">{{list.fullname}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Kota</ion-label>
+			<ion-label>City</ion-label>
 			<ion-select [(ngModel)]="filterData.f_city" interface="popover">
-				<ion-option value="">Semua Kota</ion-option>
+				<ion-option value="">All</ion-option>
 				<ion-option *ngFor="let list of city" [value]="list">{{list}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Batas</ion-label>
-			<ion-input type="number" placeholder="Batas tampil" clearInput [(ngModel)]="filterData.limit" min="1"></ion-input>
+			<ion-label>Limit</ion-label>
+			<ion-input type="number" placeholder="Limit Number" clearInput [(ngModel)]="filterData.limit" min="1"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Urutan</ion-label>
+			<ion-label>Order By</ion-label>
 			<ion-select [(ngModel)]="filterData.sort" interface="popover">
 				<ion-option *ngFor="let list of sort" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 			<ion-select [(ngModel)]="filterData.order" interface="popover">
-				<ion-option value="ASC">Menaik</ion-option>
-				<ion-option value="DESC">Menurun</ion-option>
+				<ion-option value="ASC">Ascending</ion-option>
+				<ion-option value="DESC">Descebding</ion-option>
 			</ion-select>
 		</ion-item>
 

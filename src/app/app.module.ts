@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { HttpModule } from '@angular/http';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Clipboard } from '@ionic-native/clipboard';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { LocalNotifications } from '@ionic-native/local-notifications';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -46,6 +47,7 @@ import { PusherProvider } from '../providers/pusher/pusher';
     Clipboard,
     PusherProvider,
     LocalNotifications,
+    InAppBrowser,
     // OAuthServiceProvider,
   ]
 })

@@ -9,11 +9,14 @@
 	<ion-navbar>
 		
 		<ion-buttons end>
+			<button ion-button icon-only color="dark" (click)="create()">
+				<ion-icon name="add"></ion-icon>
+			</button>
 			<button ion-button icon-only color="dark" (click)="filter()">
 				<ion-icon name="search"></ion-icon>
 			</button>
 		</ion-buttons>
-		<ion-title>Daftar CRM</ion-title>
+		<ion-title>CRM List</ion-title>
 	</ion-navbar>
 
 </ion-header>
@@ -60,7 +63,7 @@
 								{{ this.util.datetimeFormat(list.datetime_activity) }}
 							</p>
 							<p>
-								Klien : {{ list.pic_fullname }}
+								Client : {{ list.pic_fullname }}
 							</p>
 
 							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token == null">
@@ -81,13 +84,18 @@
 							</div>
 
 							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token != null">
-								<button ion-button small (click)="sendFeedback(list.id, list.feedback_email)">Kirim Feedback</button>
+								<button ion-button small (click)="sendFeedback(list.id, list.feedback_email, list.feedback_phone)">Send Feedback</button>
 							</div>
+
+							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token != null && list.feedback_phone != null">
+								<button ion-button small (click)="sendWhatsApp(list.id)" color="success" >Send Via WhatsApp</button>
+							</div>
+
 							<div *ngIf="list.datetime_check_in == null && list.datetime_check_out == null && list.feedback_token == null">
-								<button ion-button color="warning" small (click)="reschedule(list.id,list.activity,list.datetime_activity_iso)">Jadwal Ulang</button>
+								<button ion-button color="warning" small (click)="reschedule(list.id,list.activity,list.datetime_activity_iso)">Reschedule</button>
 							</div>
 							<div>
-								<button ion-button color="success" small (click)="next(list.crm_id)">Buat Acara</button>
+								<button ion-button color="success" small (click)="next(list.crm_id)">Next Event</button>
 							</div>
 						</ion-col>
 					</ion-row>

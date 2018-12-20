@@ -7,7 +7,7 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Buat CRM Baru</ion-title>
+		<ion-title>Create CRM</ion-title>
 	</ion-navbar>
 
 </ion-header>
@@ -15,16 +15,16 @@
 
 <ion-content padding>
 	<ion-list *ngIf="step == 0">
-		<p>Pilih Tipe</p>
+		<p>Select Type</p>
 
 		<ion-list radio-group [(ngModel)]="inputData.type">
 			<ion-item>
-				<ion-label>Klien Lama</ion-label>
+				<ion-label>Old Client</ion-label>
 				<ion-radio value="CLIENT"></ion-radio>
 			</ion-item>
 
 			<ion-item>
-				<ion-label>Klien Baru</ion-label>
+				<ion-label>New Client</ion-label>
 				<ion-radio value="PROSPEC"></ion-radio>
 			</ion-item>
 
@@ -38,7 +38,7 @@
 						<button ion-button color="light" full (click)="back(0)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(0)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(0)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -47,12 +47,12 @@
 	</ion-list>
 	<ion-list *ngIf="step == 1">
 
-		<p>Pilih Klien</p>
+		<p>Select Client</p>
 
 		<ion-item>
-			<ion-label>Perusahaan *</ion-label>
+			<ion-label>Company *</ion-label>
 			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getCompany(inputData.company_id)">
-				<ion-option value="">Pilih Perusahaan</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -60,7 +60,7 @@
 		<ion-item>
 			<ion-label>Brand</ion-label>
 			<ion-select [(ngModel)]="inputData.brand_id">
-				<ion-option value="">Pilih Brand</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of brand" [value]="list.id">{{list.brand}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -68,7 +68,7 @@
 		<ion-item>
 			<ion-label>PIC *</ion-label>
 			<ion-select [(ngModel)]="inputData.pic_id">
-				<ion-option value="">Pilih PIC</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of pic" [value]="list.id">{{list.fullname}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -76,7 +76,7 @@
 		<ion-item>
 			<ion-label>Address</ion-label>
 			<ion-select [(ngModel)]="inputData.address_id">
-				<ion-option value="">Pilih Alamat</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of address" [value]="list.id">{{list.address}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -88,7 +88,7 @@
 						<button ion-button color="light" full (click)="back(1)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(1)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(1)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -97,12 +97,12 @@
 	</ion-list>
 	<ion-list *ngIf="step == 2">
 
-		<p>Pilih Perusahaan</p>
+		<p>Select Company</p>
 
 		<ion-item>
-			<ion-label>Perusahaan *</ion-label>
+			<ion-label>Company *</ion-label>
 			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getCompany(inputData.company_id)">
-				<ion-option value="">Pilih Perusahaan</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -110,28 +110,28 @@
 		<ion-item *ngIf="inputData.company_id != ''">
 			<ion-label>Brand</ion-label>
 			<ion-select [(ngModel)]="inputData.brand_id">
-				<ion-option value="">Pilih Brand</ion-option>
-				<ion-option value="new">Brand Baru</ion-option>
+				<ion-option value=""></ion-option>
+				<ion-option value="new">New</ion-option>
 				<ion-option *ngFor="let list of brand" [value]="list.id">{{list.brand}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item *ngIf="inputData.company_id != '' && inputData.brand_id == 'new'">
-			<ion-label stacked>Brand</ion-label>
+			<ion-label stacked>New Brand</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.brand_prospec"></ion-input>
 		</ion-item>
 
 		<ion-item *ngIf="inputData.company_id != ''">
-			<ion-label>Alamat</ion-label>
+			<ion-label>Address</ion-label>
 			<ion-select [(ngModel)]="inputData.address_id">
-				<ion-option value="">Pilih Alamat</ion-option>
-				<ion-option value="new">Alamat Baru</ion-option>
+				<ion-option value=""></ion-option>
+				<ion-option value="new">New</ion-option>
 				<ion-option *ngFor="let list of address" [value]="list.id">{{list.address}}</ion-option>
 			</ion-select>
 		</ion-item>
 
 		<ion-item *ngIf="inputData.company_id != '' && inputData.address_id == 'new'">
-			<ion-label stacked>Alamat</ion-label>
+			<ion-label stacked>New Address</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.address_prospec"></ion-input>
 		</ion-item>
 
@@ -139,7 +139,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col col-12>
-						<button ion-button color="light" full (click)="setStep(3)">Buat Baru</button>
+						<button ion-button color="light" full (click)="setStep(3)">Create New</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -152,7 +152,7 @@
 						<button ion-button color="light" full (click)="back(2)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(2)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(2)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -161,21 +161,21 @@
 	</ion-list>
 	<ion-list *ngIf="step == 3">
 
-		<p>Buat Perusahaan Baru</p>
+		<p>Create Company</p>
 
 		<ion-item>
-			<ion-label stacked>Nama Perusahaan *</ion-label>
+			<ion-label stacked>Name Company *</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.company_name_prospec"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Telepon Perusahaan</ion-label>
+			<ion-label stacked>Phone</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.company_phone_prospec"></ion-input>
 		</ion-item>
 
 
 		<ion-item>
-			<ion-label stacked>Fax Perusahaan</ion-label>
+			<ion-label stacked>Fax</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.company_fax_prospec"></ion-input>
 		</ion-item>
 
@@ -185,7 +185,7 @@
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Alamat</ion-label>
+			<ion-label stacked>Address</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.address_prospec"></ion-input>
 		</ion-item>
 
@@ -197,7 +197,7 @@
 						<button ion-button color="light" full (click)="back(3)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(3)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(3)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -206,12 +206,12 @@
 
 	<ion-list *ngIf="step == 4">
 
-		<p>Pilih PIC</p>
+		<p>Select PIC</p>
 
 		<ion-item>
 			<ion-label>PIC *</ion-label>
 			<ion-select [(ngModel)]="inputData.pic_id">
-				<ion-option value="">Pilih PIC</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of pic" [value]="list.id">{{list.fullname}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -220,7 +220,7 @@
 			<ion-grid>
 				<ion-row>
 					<ion-col col-12>
-						<button ion-button color="light" full (click)="setStep(5)">Buat Baru</button>
+						<button ion-button color="light" full (click)="setStep(5)">Create New</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -233,7 +233,7 @@
 						<button ion-button color="light" full (click)="back(4)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(4)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(4)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -242,25 +242,25 @@
 
 	<ion-list *ngIf="step == 5">
 
-		<p>Buat PIC Baru</p>
+		<p>Create PIC</p>
 
 		<ion-item>
-			<ion-label stacked>Nama Lengkap *</ion-label>
+			<ion-label stacked>Fullname *</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.pic_fullname_prospec"></ion-input>
 		</ion-item>
 
 		<ion-item>
-			<ion-label stacked>Jenis Kelamin *</ion-label>
+			<ion-label stacked>Gender *</ion-label>
 			<ion-select [(ngModel)]="inputData.pic_gender_prospec">
-				<ion-option value="">Pilih Jenis Kelamin</ion-option>
-				<ion-option value="M">Laki-laki</ion-option>
-				<ion-option value="F">Perempuan</ion-option>
+				<ion-option value=""></ion-option>
+				<ion-option value="M">Male</ion-option>
+				<ion-option value="F">Female</ion-option>
 			</ion-select>
 		</ion-item>
 
 
 		<ion-item>
-			<ion-label stacked>Posisi</ion-label>
+			<ion-label stacked>Position</ion-label>
 			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.pic_position_prospec"></ion-input>
 		</ion-item>
 
@@ -281,7 +281,7 @@
 						<button ion-button color="light" full (click)="back(5)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(5)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(5)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>
@@ -290,12 +290,12 @@
 
 	<ion-list *ngIf="step == 6">
 
-		<p>Aktifitas</p>
+		<p>Activity</p>
 
 		<ion-item>
-			<ion-label>Aktifitas *</ion-label>
+			<ion-label>Activity *</ion-label>
 			<ion-select [(ngModel)]="inputData.activity">
-				<ion-option value="">Pilih Aktifitas</ion-option>
+				<ion-option value=""></ion-option>
 				<ion-option *ngFor="let list of activity" [value]="list.value">{{list.name}}</ion-option>
 			</ion-select>
 			<ion-label color="danger">{{ errorData.activity }}</ion-label>
@@ -303,13 +303,13 @@
 
 
 		<ion-item>
-			<ion-label>Tanggal *</ion-label>
+			<ion-label>Date *</ion-label>
 			<ion-datetime displayFormat="DD MMMM YYYY" [min]="minDate" [max]="maxDate" [(ngModel)]="inputData.date_activity"></ion-datetime>
 			<ion-label color="danger">{{ errorData.date_activity }}</ion-label>
 		</ion-item>
 
 		<ion-item>
-			<ion-label>Jam *</ion-label>
+			<ion-label>Time *</ion-label>
 			<ion-datetime displayFormat="HH:mm" [(ngModel)]="inputData.time_activity"></ion-datetime>
 			<ion-label color="danger">{{ errorData.time_activity }}</ion-label>
 		</ion-item>
@@ -321,7 +321,7 @@
 						<button ion-button color="light" full (click)="back(6)">Back</button>
 					</ion-col>
 					<ion-col col-6>
-						<button ion-button color="success" full (click)="checkValidation(6)">Selanjutnya</button>
+						<button ion-button color="success" full (click)="checkValidation(6)">Next</button>
 					</ion-col>
 				</ion-row>
 			</ion-grid>

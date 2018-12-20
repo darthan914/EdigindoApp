@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, App} from 'ionic-angular';
 
-import { Http } from '@angular/http';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 import { AuthenticationProvider } from '../../providers/authentication/authentication';
 import { UtilityProvider } from '../../providers/utility/utility';
@@ -27,6 +27,10 @@ import { LocalNotifications } from '@ionic-native/local-notifications';
 })
 export class HomePage {
 
+	headers;
+	
+	notif;
+
 	constructor(
 		public app                 : App,
 		public http                : Http, 
@@ -45,18 +49,62 @@ export class HomePage {
 		}
 		else
 		{
-			var notif = this.localNotifications;
+			this.headers = new Headers();
+	 		this.headers.append('Accept', 'application/json');
+	 		this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+
+	 		var notif = this.localNotifications;
 
 			this.pusher.init().bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
 				notif.schedule({
+					id : 0,
 					title : data.from,
 					text: data.messages,
 					data: {
 				        app_slug : data.app_slug
 				    }
 				});
-				// console.log(data.messages);
+				console.log(data.messages);
 			});
+
+			let options = new RequestOptions({ headers: this.headers });
+
+	 		let data = {
+	 		}
+
+			this.http.post(this.env.base_url+"api/crm/notifications", data, options)
+	 		.subscribe(
+	 			res => {
+	 				if(res.json().status == "OK")
+	 				{
+	 				// 	notif.schedule({
+						// 	id : id++,
+						// 	title : res.json().data,
+						// 	trigger: {at: new Date(new Date().getTime() + 3600)},
+						// });
+
+						for (var i in res.json().data.schedule) {
+							var id = 100;
+							var title = "Meeting with :" + res.json().data.schedule[i].company_name + ' ' + res.json().data.schedule[i].pic_fullname;
+							var text = "At :" + this.util.datetimeFormat(res.json().data.schedule[i].datetime_activity_iso);
+							var datetime = new Date(res.json().data.schedule[i].datetime_activity_iso);
+
+							notif.schedule({
+								id : id++,
+								title : title,
+								text: text,
+								trigger: {at: new Date(datetime.getTime() - (2*60*60*1000))},
+							});
+						}
+	 				}
+	 				
+	 			},
+	 			error => { 
+	 				this.util.presentToast('Server Error! try logout and login again!');
+	 			}
+	 		);
+
+	 		
 		}
 	}
 
@@ -74,18 +122,16 @@ export class HomePage {
 				'group_name' : 'CRM',
 				'access'     : 'list-crm',
 				'content'    : [
-					{'page' : 'create-crm', 'name' : 'Buat CRM', 'access' : 'create-crm'},
-					{'page' : 'list-crm', 'name' : 'Daftar CRM', 'access' : 'list-crm'},
+					{'page' : 'list-crm', 'name' : 'List CRM', 'access' : 'list-crm'},
 				]
 			},
 			{
-				'group_name' : 'Pengiriman',
+				'group_name' : 'Delivery',
 				'access'     : 'list-delivery',
 				'content'    : [
-					{'page' : 'courier', 'name' : 'Daftar Pengiriman', 'access' : 'courier-delivery'}
+					{'page' : 'courier', 'name' : 'List Delivery', 'access' : 'courier-delivery'}
 				]
 			}
-			
 		]
 	};
 
@@ -157,14 +203,20 @@ export class HomePage {
 		
 	}
 
-	testNotif(){
+	testNotifDelay(minutes:number){
 		this.localNotifications.schedule({
 			id: 1,
-			title: 'Test Notification',
-			text: 'Content Notification',
-			trigger: {at: new Date(new Date().getTime() + 3600)},
-			data: { data : ''}
+			title: 'Delayed ILocalNotification',
+			text: 'Content Notification Delay' + minutes,
+			trigger: {at: new Date(new Date().getTime() + minutes * 60000)},
 		})
+	}
+
+	testNotif(){
+		this.localNotifications.schedule({
+			id: 2,
+		    text: 'Single ILocalNotification',
+		});
 	}
 
 }

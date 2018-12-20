@@ -7,6 +7,7 @@ import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
 import { Geolocation } from '@ionic-native/geolocation';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /**
  * Generated class for the ListCrmPage page.
@@ -73,6 +74,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  		public util      : UtilityProvider,
  		public auth      : AuthenticationProvider,
  		private geolocation : Geolocation,
+ 		private iab: InAppBrowser,
  		) {
  		this.headers = new Headers();
  		this.headers.append('Accept', 'application/json');
@@ -207,7 +209,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  				this.util.loading.dismiss();
  				this.util.presentToast('Server Error! try logout and login again!');
  			}
- 			);
+ 		);
  	}
 
  	filter()
@@ -273,6 +275,24 @@ import { Geolocation } from '@ionic-native/geolocation';
  		})
  	}
 
+ 	create()
+ 	{
+
+ 		const modal = this.modalCtrl.create('CreateCrmPage');
+
+ 		modal.present();
+
+ 		modal.onWillDismiss((res) => {
+ 			if(res)
+ 			{
+	 			if(res.status == 'APPLY')
+	 			{
+	 				this.load();
+	 			}
+	 		}
+ 		})
+ 	}
+
 
  	next(crm_id)
  	{
@@ -323,6 +343,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  		var latitude  = 0;
  		var longitude = 0;
 
+ 		this.util.showLoader('Loading...');
  		this.geolocation.getCurrentPosition().then((resp) => {
  			latitude  = resp.coords.latitude;
  			longitude = resp.coords.longitude;
@@ -335,7 +356,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  				longitude_check_in : longitude,
  			}
 
- 			this.util.showLoader('Loading...');
+ 			
  			this.http.post(this.env.base_url+"api/crm/checkIn", data, options)
  			.subscribe(
  				data => {
@@ -344,7 +365,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 
  					if(data.json().status == "OK")
  					{
-
  						this.load();
  					}
  				},
@@ -352,8 +372,9 @@ import { Geolocation } from '@ionic-native/geolocation';
  					this.util.loading.dismiss();
  					this.util.presentToast('Server Error! try logout and login again!');
  				}
- 				);
+ 			);
  		}).catch((error) => {
+ 			this.util.loading.dismiss();
  			this.util.presentToast('Error! please allow access location to complete task!');
  		});
  	}
@@ -363,6 +384,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  		var latitude  = 0;
  		var longitude = 0;
 
+ 		this.util.showLoader('Loading...');
  		this.geolocation.getCurrentPosition().then((resp) => {
  			latitude  = resp.coords.latitude;
  			longitude = resp.coords.longitude;
@@ -375,7 +397,7 @@ import { Geolocation } from '@ionic-native/geolocation';
  				longitude_check_out : longitude,
  			}
 
- 			this.util.showLoader('Loading...');
+ 			
  			this.http.post(this.env.base_url+"api/crm/checkOut", data, options)
  			.subscribe(
  				data => {
@@ -394,15 +416,17 @@ import { Geolocation } from '@ionic-native/geolocation';
  				}
  				);
  		}).catch((error) => {
+ 			this.util.loading.dismiss();
  			this.util.presentToast('Error! please allow access location to complete task!');
  		});
  	}
 
- 	sendFeedback(id, feedback_email)
+ 	sendFeedback(id, feedback_email, feedback_phone)
  	{
  		const passingData = {
  			id : id,
  			feedback_email : feedback_email,
+ 			feedback_phone : feedback_phone,
  		}
 
  		const modal = this.modalCtrl.create('SendFeedbackCrmPage', passingData);
@@ -418,6 +442,12 @@ import { Geolocation } from '@ionic-native/geolocation';
 	 			}
 	 		}
  		})
+ 	}
+
+ 	sendWhatsApp(id)
+ 	{
+ 		// console.log(this.env.base_url+"api/crm/waFeedback?id="+id);
+ 		this.iab.create(this.env.base_url+"api/crm/waFeedback?id="+id, "_blank");
  	}
 
  }

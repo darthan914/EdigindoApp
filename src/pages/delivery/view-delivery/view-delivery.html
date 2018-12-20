@@ -8,7 +8,7 @@
 
 	<ion-navbar>
 
-		<ion-title>Detail Pengiriman</ion-title>
+		<ion-title>Detail Delivery</ion-title>
 
 		<ion-buttons end>
 			<button ion-button icon-only color="danger" (click)="this.close()">
@@ -25,16 +25,16 @@
 	<ion-grid>
 		
 		<ion-row>
-			<ion-col col-4><h3>Dari</h3></ion-col>
+			<ion-col col-4><h3>From</h3></ion-col>
 			<ion-col col-8>
 				({{ index.name }} - {{ index.user_phone }})<br/>
-				Ambil :  {{ index.get_from }}<br/>
-				Pos   :  {{ this.util.datetimeFormat(index.created_at) }}<br/>
-				Tiba  :  {{ this.util.datetimeFormat(index.datetime_send) }}
+				Take      :  {{ index.get_from }}<br/>
+				Posting   :  {{ this.util.datetimeFormat(index.created_at) }}<br/>
+				Arrive at :  {{ this.util.datetimeFormat(index.datetime_send) }}
 			</ion-col>
 		</ion-row>
 		<ion-row>
-			<ion-col col-4><h3>Ke</h3></ion-col>
+			<ion-col col-4><h3>To</h3></ion-col>
 			<ion-col col-8>
 				({{ index.pic_name }} - {{ index.company }})<br/>
 				{{ index.pic_phone }}<br/>
@@ -49,12 +49,12 @@
 
 
 		<ion-row>
-			<ion-col col-4><h3>Keterangan</h3></ion-col>
+			<ion-col col-4><h3>Note</h3></ion-col>
 			<ion-col col-8>{{ index.note }}</ion-col>
 		</ion-row>
 
 		<ion-row>
-			<ion-col col-12><h3>Barang</h3></ion-col>
+			<ion-col col-12><h3>Item</h3></ion-col>
 			<ion-col col-12 [innerHtml]="index.detail"></ion-col>
 		</ion-row>
 		

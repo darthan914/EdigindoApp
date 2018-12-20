@@ -11,7 +11,7 @@
 
 	<ion-navbar>
 
-	    <ion-title>Daftar Tugas Pengiriman</ion-title>
+	    <ion-title>List Job Delivery</ion-title>
 	    <ion-buttons end>
 			<button ion-button icon-only color="dark" (click)="this.filter()">
 				<ion-icon name="search"></ion-icon>
@@ -31,7 +31,7 @@
 		></ion-refresher-content>
 	</ion-refresher>
 	<div>
-		<button ion-button color="primary" full (click)="getWaitingDelivery()">Ambil Daftar Pengiriman</button>
+		<button ion-button color="primary" full (click)="getWaitingDelivery()">Take Request Delivery</button>
 	</div>
 	<ion-grid *ngIf="paginateData.total > 0">
 		<ion-row>
