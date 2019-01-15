@@ -67,7 +67,7 @@
 							</p>
 
 							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token == null">
-								<p><b>Selesai</b></p>
+								<p><b>Finished</b></p>
 							</div>
 
 							
@@ -83,12 +83,10 @@
 								<button ion-button small (click)="checkOut(list.id)">Check Out</button>
 							</div>
 
-							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token != null">
-								<button ion-button small (click)="sendFeedback(list.id, list.feedback_email, list.feedback_phone)">Send Feedback</button>
-							</div>
+							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null">
+								<button ion-button small (click)="sendFeedbackEmail(list.id, list.feedback_email)">Send Email</button>
 
-							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token != null && list.feedback_phone != null">
-								<button ion-button small (click)="sendWhatsApp(list.id)" color="success" >Send Via WhatsApp</button>
+								<button ion-button small (click)="sendFeedbackWhatsapp(list.id, list.feedback_phone)" color="success" >Send WhatsApp</button>
 							</div>
 
 							<div *ngIf="list.datetime_check_in == null && list.datetime_check_out == null && list.feedback_token == null">

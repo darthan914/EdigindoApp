@@ -7,7 +7,6 @@ import { UtilityProvider } from '../../../providers/utility/utility';
 import { AuthenticationProvider } from '../../../providers/authentication/authentication';
 
 import { Geolocation } from '@ionic-native/geolocation';
-import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 /**
  * Generated class for the ListCrmPage page.
@@ -74,7 +73,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
  		public util      : UtilityProvider,
  		public auth      : AuthenticationProvider,
  		private geolocation : Geolocation,
- 		private iab: InAppBrowser,
  		) {
  		this.headers = new Headers();
  		this.headers.append('Accept', 'application/json');
@@ -421,15 +419,14 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
  		});
  	}
 
- 	sendFeedback(id, feedback_email, feedback_phone)
+ 	sendFeedbackEmail(id, feedback_email)
  	{
  		const passingData = {
  			id : id,
  			feedback_email : feedback_email,
- 			feedback_phone : feedback_phone,
  		}
 
- 		const modal = this.modalCtrl.create('SendFeedbackCrmPage', passingData);
+ 		const modal = this.modalCtrl.create('SendFeedbackEmailCrmPage', passingData);
 
  		modal.present();
 
@@ -444,10 +441,26 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
  		})
  	}
 
- 	sendWhatsApp(id)
+ 	sendFeedbackWhatsapp(id, feedback_phone)
  	{
- 		// console.log(this.env.base_url+"api/crm/waFeedback?id="+id);
- 		this.iab.create(this.env.base_url+"api/crm/waFeedback?id="+id, "_blank");
+ 		const passingData = {
+ 			id : id,
+ 			feedback_phone : feedback_phone,
+ 		}
+
+ 		const modal = this.modalCtrl.create('SendFeedbackWhatsappCrmPage', passingData);
+
+ 		modal.present();
+
+ 		modal.onWillDismiss((res) => {
+ 			if(res)
+ 			{
+	 			if(res.status == 'APPLY')
+	 			{
+	 				this.load();
+	 			}
+	 		}
+ 		})
  	}
 
  }

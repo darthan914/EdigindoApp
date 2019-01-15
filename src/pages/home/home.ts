@@ -49,62 +49,7 @@ export class HomePage {
 		}
 		else
 		{
-			this.headers = new Headers();
-	 		this.headers.append('Accept', 'application/json');
-	 		this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
-
-	 		var notif = this.localNotifications;
-
-			this.pusher.init().bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
-				notif.schedule({
-					id : 0,
-					title : data.from,
-					text: data.messages,
-					data: {
-				        app_slug : data.app_slug
-				    }
-				});
-				console.log(data.messages);
-			});
-
-			let options = new RequestOptions({ headers: this.headers });
-
-	 		let data = {
-	 		}
-
-			this.http.post(this.env.base_url+"api/crm/notifications", data, options)
-	 		.subscribe(
-	 			res => {
-	 				if(res.json().status == "OK")
-	 				{
-	 				// 	notif.schedule({
-						// 	id : id++,
-						// 	title : res.json().data,
-						// 	trigger: {at: new Date(new Date().getTime() + 3600)},
-						// });
-
-						for (var i in res.json().data.schedule) {
-							var id = 100;
-							var title = "Meeting with :" + res.json().data.schedule[i].company_name + ' ' + res.json().data.schedule[i].pic_fullname;
-							var text = "At :" + this.util.datetimeFormat(res.json().data.schedule[i].datetime_activity_iso);
-							var datetime = new Date(res.json().data.schedule[i].datetime_activity_iso);
-
-							notif.schedule({
-								id : id++,
-								title : title,
-								text: text,
-								trigger: {at: new Date(datetime.getTime() - (2*60*60*1000))},
-							});
-						}
-	 				}
-	 				
-	 			},
-	 			error => { 
-	 				this.util.presentToast('Server Error! try logout and login again!');
-	 			}
-	 		);
-
-	 		
+			this.notification();
 		}
 	}
 
@@ -153,6 +98,69 @@ export class HomePage {
 		
 	}
 
+	notification(clear:boolean = false)
+	{
+		this.headers = new Headers();
+ 		this.headers.append('Accept', 'application/json');
+ 		this.headers.append('Authorization', 'Bearer '+localStorage.getItem('token'));
+
+ 		var notif = this.localNotifications;
+
+ 		if(clear)
+ 		{
+ 			notif.clearAll();
+ 		}
+
+		this.pusher.init().bind('Illuminate\\Notifications\\Events\\BroadcastNotificationCreated', function(data) {
+			notif.schedule({
+				id : 0,
+				title : data.from,
+				text: data.messages,
+				data: {
+			        app_slug : data.app_slug
+			    }
+			});
+			console.log(data.messages);
+		});
+
+		let options = new RequestOptions({ headers: this.headers });
+
+ 		let data = {
+ 		}
+
+		this.http.post(this.env.base_url+"api/crm/notifications", data, options)
+ 		.subscribe(
+ 			res => {
+ 				if(res.json().status == "OK")
+ 				{
+ 				// 	notif.schedule({
+					// 	id : id++,
+					// 	title : res.json().data,
+					// 	trigger: {at: new Date(new Date().getTime() + 3600)},
+					// });
+
+					for (var i in res.json().data.schedule) {
+						var id = 100;
+						var title = "Meeting with :" + res.json().data.schedule[i].company_name + ' ' + res.json().data.schedule[i].pic_fullname;
+						var text = "At :" + this.util.datetimeFormat(res.json().data.schedule[i].datetime_activity_iso);
+						var datetime = new Date(res.json().data.schedule[i].datetime_activity_iso);
+
+						notif.schedule({
+							id : id++,
+							title : title,
+							text: text,
+							trigger: {at: new Date(datetime.getTime() - (2*60*60*1000))},
+						});
+					}
+ 				}
+ 				
+ 			},
+ 			error => { 
+ 				this.util.presentToast('Server Error! try logout and login again!');
+ 			}
+ 		);
+	}
+
 	refresh(refresher)
 	{
 		if(localStorage.getItem("token")) {
@@ -171,6 +179,8 @@ export class HomePage {
 
 					this.user     = JSON.parse(localStorage.getItem('user'));
 					this.position = JSON.parse(localStorage.getItem('position'));
+
+					this.notification(true);
 				}
 				
 			}, (err) => {

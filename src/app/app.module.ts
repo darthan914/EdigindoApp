@@ -8,6 +8,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { Clipboard } from '@ionic-native/clipboard';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { LocalNotifications } from '@ionic-native/local-notifications';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 import { HttpClientModule } from '@angular/common/http';
 import { IonicStorageModule } from '@ionic/storage';
@@ -48,6 +49,7 @@ import { PusherProvider } from '../providers/pusher/pusher';
     PusherProvider,
     LocalNotifications,
     InAppBrowser,
+    SocialSharing,
     // OAuthServiceProvider,
   ]
 })

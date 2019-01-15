@@ -14,20 +14,18 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
  @IonicPage()
  @Component({
- 	selector: 'page-send-feedback-crm',
- 	templateUrl: 'send-feedback-crm.html',
+ 	selector: 'page-send-feedback-email-crm',
+ 	templateUrl: 'send-feedback-email-crm.html',
  })
- export class SendFeedbackCrmPage {
+ export class SendFeedbackEmailCrmPage {
 
  	inputData:any = {
  		id : '',
  		feedback_email : '',
- 		feedback_phone : '',
  	};
 
  	errorData:any = {
  		feedback_email : '',
- 		feedback_phone : '',
  	};
 
  	headers:any;
@@ -44,7 +42,6 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
  		this.inputData.id = this.navParams.get('id');
  		this.inputData.feedback_email = this.navParams.get('feedback_email');
- 		this.inputData.feedback_phone = this.navParams.get('feedback_phone');
  	}
 
  	ionViewWillLoad() {
@@ -73,7 +70,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 		}
 
 		this.util.showLoader('Loading...');
-		this.http.post(this.env.base_url+"api/crm/sendFeedback", data, options)
+		this.http.post(this.env.base_url+"api/crm/sendFeedbackByEmail", data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
@@ -85,7 +82,6 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 					else
 					{
 				 		this.errorData.feedback_email = data.json().error.feedback_email !== undefined? data.json().error.feedback_email[0] : ''
-				 		this.errorData.feedback_phone = data.json().error.feedback_phone !== undefined? data.json().error.feedback_phone[0] : ''
 						this.util.loading.dismiss();
 						this.util.presentToast(data.json().message);
 					}

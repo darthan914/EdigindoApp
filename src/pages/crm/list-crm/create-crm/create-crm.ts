@@ -43,6 +43,8 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		activity      : '',
  		date_activity : '',
  		time_activity : '',
+
+ 		search_company : '',
  	};
 
  	errorData:any = {
@@ -69,7 +71,11 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		activity      : '',
  		date_activity : '',
  		time_activity : '',
+
+ 		search_company : '',
  	};
+
+ 	messagesSearchCompany = "";
 
  	company:any;
  	brand:any;
@@ -105,7 +111,6 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
  		var addMaxYear = now.getFullYear() + 1
  		this.maxDate = addMaxYear;
 		this.getCollection();
-		this.getCompany();
  	}
 
  	setStep(n:number)
@@ -192,16 +197,28 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 
 				break;
 			case 5:
-				if(this.inputData.pic_fullname_prospec != '' && this.inputData.pic_gender_prospec != '' 
-					&& this.inputData.pic_phone_prospec != '' && this.inputData.pic_email_prospec != '')
+				if(this.inputData.pic_fullname_prospec == '')
 	 			{
- 					this.setStep(6);
+ 					this.util.presentToast('Fullname Required!');
+	 				break;
 	 			}
-	 			else
+	 			else if(this.inputData.pic_gender_prospec == '')
 	 			{
-	 				this.util.presentToast('Fullname, gender, handphone dan email Required!');
+ 					this.util.presentToast('Gender Required!');
+	 				break;
+	 			}
+	 			else if(this.phoneValidator(this.inputData.pic_phone_prospec) != 'true')
+	 			{
+	 				this.util.presentToast('Invalid phone format!');
+	 				break;
+	 			}
+	 			else if(this.emailValidator(this.inputData.pic_email_prospec) != 'true')
+	 			{
+	 				this.util.presentToast('Invalid email format!');
+	 				break;
 	 			}
 
+	 			this.setStep(6);
 				break;
 			
 			case 6:
@@ -409,7 +426,7 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 		
 	}
 
-	getCompany(id:number = 0)
+	getDetail(id:number = 0)
 	{
 		let options = new RequestOptions({ headers: this.headers });
 
@@ -417,12 +434,11 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
 			f_company : id,
 		};
 
-		this.http.post(this.env.base_url+"api/company/get", data, options)
+		this.http.post(this.env.base_url+"api/company/getDetail", data, options)
 			.subscribe(
 				data => { 
 					if(data.json().status == "OK")
 					{
-						this.company = data.json().data.company;
 						this.brand = data.json().data.brand;
 						this.address = data.json().data.address;
 						this.pic = data.json().data.pic;
@@ -444,10 +460,56 @@ import { EnviromentProvider } from '../../../../providers/enviroment/enviroment'
         let result = re.test(value);
         
         if (!result) {
-        	return false
+        	return 'false'
         }
         
-        return true;
+        return 'true';
+	}
+
+	phoneValidator(value:string)
+	{
+		let re = /^[\+]?[(]?[0-9]{3,5}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+        let result = re.test(value);
+        
+        if (!result) {
+        	return 'false'
+        }
+        
+        return 'true';
+	}
+
+	searchCompany(search:string)
+	{
+		let options = new RequestOptions({ headers: this.headers });
+
+		let data = {
+			f_search : search,
+		};
+
+		this.messagesSearchCompany = "Searching....";
+
+		this.http.post(this.env.base_url+"api/company/get", data, options)
+			.subscribe(
+				data => { 
+					if(data.json().status == "OK")
+					{
+						this.company = data.json().data.company;
+
+						if(Object.keys(this.company).length > 0)
+						{
+							this.messagesSearchCompany = "Company found";
+						}
+						else
+						{
+							this.messagesSearchCompany = "Company not found";
+						}
+					}
+				},
+				error => { 
+					this.util.presentToast('Server Error! try logout and login again!');
+					this.messagesSearchCompany = "Error Server!";
+				}
+			);
 	}
 
  }

@@ -50,9 +50,17 @@
 		<p>Select Client</p>
 
 		<ion-item>
+			<ion-label>Search Company *</ion-label>
+			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.search_company"></ion-input>
+			<button clear item-right icon-only (click)="searchCompany(inputData.search_company)"><ion-icon name="search"></ion-icon></button>
+			
+		</ion-item>
+		<p>{{ messagesSearchCompany }}</p>
+
+		<ion-item>
 			<ion-label>Company *</ion-label>
-			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getCompany(inputData.company_id)">
-				<ion-option value=""></ion-option>
+			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getDetail(inputData.company_id)">
+				<ion-option value="">Select Company</ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>
@@ -100,9 +108,16 @@
 		<p>Select Company</p>
 
 		<ion-item>
+			<ion-label>Search Company *</ion-label>
+			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.search_company"></ion-input>
+			<button clear item-right icon-only (click)="searchCompany(inputData.search_company)"><ion-icon name="search"></ion-icon></button>
+		</ion-item>
+		<p>{{ messagesSearchCompany }}</p>
+
+		<ion-item>
 			<ion-label>Company *</ion-label>
-			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getCompany(inputData.company_id)">
-				<ion-option value=""></ion-option>
+			<ion-select [(ngModel)]="inputData.company_id" (ionChange)="getDetail(inputData.company_id)">
+				<ion-option value="">Select Company</ion-option>
 				<ion-option *ngFor="let list of company" [value]="list.id">{{list.name}}</ion-option>
 			</ion-select>
 		</ion-item>

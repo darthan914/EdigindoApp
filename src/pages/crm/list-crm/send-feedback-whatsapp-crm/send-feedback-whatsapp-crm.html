@@ -7,7 +7,7 @@
 <ion-header>
 
 	<ion-navbar>
-		<ion-title>Send Feedback</ion-title>
+		<ion-title>Send Feedback By Whatsapp</ion-title>
 		<ion-buttons end>
 			<button ion-button icon-only color="danger" (click)="this.close()">
 				<ion-icon name="close"></ion-icon>
@@ -20,13 +20,6 @@
 
 <ion-content padding>
 	<ion-list>
-
-		<ion-item>
-			<ion-label stacked>Email</ion-label>
-			<ion-input type="text" placeholder="" clearInput [(ngModel)]="inputData.feedback_email"></ion-input>
-			<p color="danger">{{ errorData.feedback_email }}</p>
-
-		</ion-item>
 
 		<ion-item>
 			<ion-label stacked>Phone</ion-label>
