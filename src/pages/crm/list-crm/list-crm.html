@@ -68,6 +68,7 @@
 
 							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.feedback_token == null">
 								<p><b>Finished</b></p>
+								<p *ngIf="list.rating != null"><ion-icon name="star" color="warning"></ion-icon> x {{ list.rating }}</p>
 							</div>
 
 							
@@ -83,7 +84,7 @@
 								<button ion-button small (click)="checkOut(list.id)">Check Out</button>
 							</div>
 
-							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null">
+							<div *ngIf="list.datetime_check_in != null && list.datetime_check_out != null && list.rating == null">
 								<button ion-button small (click)="sendFeedbackEmail(list.id, list.feedback_email)">Send Email</button>
 
 								<button ion-button small (click)="sendFeedbackWhatsapp(list.id, list.feedback_phone)" color="success" >Send WhatsApp</button>
