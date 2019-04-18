@@ -71,6 +71,13 @@ export class HomePage {
 				]
 			},
 			{
+				'group_name' : 'Designer',
+				'access'     : 'list-designer',
+				'content'    : [
+					{'page' : 'list-designer', 'name' : 'List Designer', 'access' : 'list-designer'},
+				]
+			},
+			{
 				'group_name' : 'Delivery',
 				'access'     : 'list-delivery',
 				'content'    : [

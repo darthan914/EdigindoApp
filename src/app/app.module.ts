@@ -19,7 +19,6 @@ import { EnviromentProvider } from '../providers/enviroment/enviroment';
 import { UtilityProvider } from '../providers/utility/utility';
 import { AuthenticationProvider } from '../providers/authentication/authentication';
 import { PusherProvider } from '../providers/pusher/pusher';
-// import { OAuthServiceProvider } from '../providers/o-auth-service/o-auth-service';
 
 @NgModule({
   declarations: [
@@ -31,7 +30,6 @@ import { PusherProvider } from '../providers/pusher/pusher';
     IonicStorageModule.forRoot(),
     HttpModule,
     HttpClientModule,
-
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -50,7 +48,6 @@ import { PusherProvider } from '../providers/pusher/pusher';
     LocalNotifications,
     InAppBrowser,
     SocialSharing,
-    // OAuthServiceProvider,
   ]
 })
 export class AppModule {}

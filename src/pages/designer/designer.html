@@ -1,0 +1,106 @@
+<!--
+  Generated template for the DesignerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+	<ion-navbar>
+		
+		<ion-buttons end>
+			<button ion-button icon-only color="dark" (click)="create()">
+				<ion-icon name="add"></ion-icon>
+			</button>
+			<button ion-button icon-only color="dark" (click)="filter()">
+				<ion-icon name="search"></ion-icon>
+			</button>
+		</ion-buttons>
+		<ion-title>Designer List</ion-title>
+	</ion-navbar>
+
+</ion-header>
+
+
+
+<ion-content padding>
+	<ion-refresher (ionRefresh)="refresh($event)">
+		<ion-refresher-content
+			pullingIcon="arrow-dropdown"
+			pullingText="Pull to refresh"
+			refreshingSpinner="circles"
+			refreshingText="Refreshing..."
+		></ion-refresher-content>
+	</ion-refresher>
+
+	<ion-grid *ngIf="paginateData.total > 0">
+		<ion-row>
+			<ion-col col-sm-4 col-3>
+				<button ion-button full icon-only color="light" [disabled]="util.stringToBoolean(paginateData.disabledPrevBtn)" (click)="prevPage()"><ion-icon name="skip-backward"></ion-icon></button>
+			</ion-col>
+			<ion-col col-sm-4 col-6>
+				<button ion-button full color="light" (click)="indexPage()">{{ paginateData.from }} to {{ paginateData.to }} of {{ paginateData.total }}</button>
+			</ion-col>
+			<ion-col col-sm-4 col-3>
+				<button ion-button full icon-only color="light" [disabled]="util.stringToBoolean(paginateData.disabledNextBtn)" (click)="nextPage()"><ion-icon name="skip-forward"></ion-icon></button>
+			</ion-col>
+		</ion-row>
+
+		<ion-row>
+			<ion-col>
+
+				<div *ngFor="let list of index;" class="border-list">
+					<ion-row>
+						<ion-col col-8>
+							<p>
+								<ion-chip>
+									<ion-label>{{ list.project }}</ion-label>
+								</ion-chip>
+							</p>
+							<p>
+								<b>Designer : {{ list.designer_fullname }}</b>
+							</p>
+							<p>
+								{{ this.util.datetimeFormat(list.created_at) }}
+							</p>
+							<p>
+								{{ list.status_project }}  - {{ list.approved_sales }} - {{ list.result_project }} 
+							</p>
+						</ion-col>
+						<ion-col col-4>
+
+							<div *ngIf="list.status_project == 'pending'">
+								<button ion-button small (click)="edit(list.id)" color="warning">Edit</button>
+								<button ion-button small (click)="delete(list.id)" color="danger">Delete</button>
+							</div>
+
+							<div *ngIf="list.status_project == 'finish' && list.approved_sales == 'waiting'">
+								<button ion-button small (click)="approve(list.id)" color="success">Approve</button>
+								<button ion-button small (click)="reject(list.id)" color="danger">Reject</button>
+							</div>
+
+							<div *ngIf="list.status_project == 'finish' && list.approved_sales == 'approved' && list.result_project == 'waiting'">
+								<button ion-button small (click)="success(list.id)" color="success">Success</button>
+								<button ion-button small (click)="failed(list.id)" color="danger">Failed</button>
+							</div>
+						</ion-col>
+					</ion-row>
+				</div>
+			</ion-col>
+				
+		</ion-row>
+			
+		<ion-row>
+			<ion-col col-sm-4 col-3>
+				<button ion-button full icon-only color="light" [disabled]="util.stringToBoolean(paginateData.disabledPrevBtn)" (click)="prevPage()"><ion-icon name="skip-backward"></ion-icon></button>
+			</ion-col>
+			<ion-col col-sm-4 col-6>
+				<button ion-button full color="light" (click)="indexPage()">{{ paginateData.from }} to {{ paginateData.to }} of {{ paginateData.total }}</button>
+			</ion-col>
+			<ion-col col-sm-4 col-3>
+				<button ion-button full icon-only color="light" [disabled]="util.stringToBoolean(paginateData.disabledNextBtn)" (click)="nextPage()"><ion-icon name="skip-forward"></ion-icon></button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+</ion-content>
